@@ -1,0 +1,176 @@
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/></symbol>
+    </defs>
+</svg>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="#top">{{NAME}}</a>
+    <nav class="nav" aria-label="サイト内">
+      <a href="#start">はじめての一株</a>
+      <a href="#collection">コレクション</a>
+      <a href="#calendar">生育カレンダー</a>
+      <a href="#journal">読みもの</a>
+      <a href="#room">鉢と部屋</a>
+    </nav>
+    <a class="btn" href="https://www.instagram.com/{{HANDLE}}/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#ig"/></svg>フォローする</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-lead">
+        <p>膨らんだ幹や、棘をまとった姿に惹かれたら、それが始めどきです。塊根植物・多肉植物・サボテンの育て方と、黒い鉢や古道具と合わせて部屋に置く楽しみを、はじめての人にも分かるように綴っています。</p>
+        <div class="actions">
+          <a class="btn" href="https://www.instagram.com/{{HANDLE}}/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#ig"/></svg>Instagramでフォローする</a>
+          <a class="btn btn--ghost" href="#start">はじめての一株へ</a>
+        </div>
+        <p class="handle">@{{HANDLE}} で毎週の成長記録を更新中</p>
+      </div>
+      <h1 class="hero-title"><span>土から、</span><span>かたちを。</span></h1>
+      <figure class="hero-figure">
+        <img class="grow" src="img/pachy.jpg" width="1200" height="1600" fetchpriority="high" alt="黒い棘状の鉢に植えたパキポディウム・ウィンゾリー。歯車の台に載り、床に枝の影が落ちている">
+        <figcaption><span class="latin">Pachypodium windsorii</span>　炭のような黒い鉢と、古い歯車の台</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="start">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>はじめての一株</h2>
+        <p>塊根植物は難しそうに見えますが、季節に合わせて水やりを変えることさえ覚えれば、何年も付き合える植物です。始めるまでの流れをまとめました。</p>
+      </div>
+      <ol class="steps">
+        <li><h3>一株を選ぶ</h3><p>最初は夏型のパキポディウムや、丈夫なサボテンがおすすめです。春から初夏に迎えると、すぐ育つ季節に入るので失敗しにくくなります。</p></li>
+        <li><h3>鉢と土を用意する</h3><p>株よりひと回り大きく、底に穴のある鉢を選びます。土は市販の多肉植物・サボテン用で十分です。</p></li>
+        <li><h3>明るい窓辺に置く</h3><p>日当たりと風通しが何より大事です。南向きの窓辺か、春から秋はベランダが定位置になります。</p></li>
+        <li><h3>季節で水を変える</h3><p>育つ季節は乾いたらたっぷり、休む季節は控えめに。下の<a href="#calendar">生育カレンダー</a>を目安にしてください。</p></li>
+      </ol>
+      <div class="ask">
+        <p>迷ったら、InstagramのDMで気軽に聞いてください。始めたばかりの人の質問も歓迎しています。</p>
+        <a class="btn" href="https://www.instagram.com/{{HANDLE}}/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#ig"/></svg>Instagramで質問する</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="collection">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>コレクション</h2>
+        <p>手元で育てている株を、原産地と生育型、植えている鉢とあわせて記録しています。</p>
+        <div class="filters" role="group" aria-label="種類で絞り込む">
+          <button class="chip" type="button" data-filter="all" aria-pressed="true">すべて</button>
+          <button class="chip" type="button" data-filter="caudex" aria-pressed="false">塊根植物</button>
+          <button class="chip" type="button" data-filter="succulent" aria-pressed="false">多肉植物</button>
+          <button class="chip" type="button" data-filter="cactus" aria-pressed="false">サボテン</button>
+        </div>
+      </div>
+      <ul class="specimens">
+        {{SPECIMENS}}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="calendar">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>生育カレンダー</h2>
+        <p>水やりの量は、その株が「いま育つ季節か、休む季節か」で決まります。生育型ごとの目安です。枠で囲んだ列が今月です。</p>
+      </div>
+      <div class="cal-scroll">
+        <table class="cal">
+          <thead><tr><th scope="col"><span class="sr">生育型</span></th>{{MONTHS}}</tr></thead>
+          <tbody>{{CALROWS}}</tbody>
+        </table>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--lichen)"></i>生育期　鉢土が乾いたらたっぷり</span>
+        <span><i style="background:var(--lichen-soft)"></i>緩やか　乾いて数日おいてから控えめに</span>
+        <span><i style="background:repeating-linear-gradient(135deg,var(--line) 0 2px,transparent 2px 6px)"></i>休眠期　断水か月1回ほど</span>
+      </div>
+      <div class="cal-foot">
+        <figure class="cal-photo">
+          <img src="img/leaves.jpg" width="1000" height="1500" alt="細長い葉を枝先いっぱいに茂らせた、棘の多いパキポディウムの幹" loading="lazy">
+          <figcaption>生育期のパキポディウム。枝先に葉が揃っているあいだは、鉢土が乾いたらたっぷり水をやります。</figcaption>
+        </figure>
+        <div class="cal-note">
+          <p>関東の室内と屋外を行き来する管理での目安です。</p>
+          <p>夏型の株は、最低気温が10℃を下回る頃から水を減らし、葉が黄色くなって落ち始めたら断水に切り替えます。春、新芽が動いてから少しずつ水を戻します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="journal">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>読みもの</h2>
+        <p>育て方の試行錯誤、鉢や用土のこと、植物のある部屋づくり。</p>
+      </div>
+      <div class="journal">
+        <figure class="journal-photo">
+          <img src="img/rosette.jpg" width="1400" height="933" alt="細く反った葉を放射状に広げる株。ひび割れた釉の丸い鉢に植わっている" loading="lazy">
+          <figcaption>ひび割れた釉の丸鉢に、細い葉の株を一つ。</figcaption>
+        </figure>
+        <ul class="posts">
+          <li><a href="#journal"><time datetime="2026-09-28">2026.09.28</time><span class="cat">はじめて</span><h3>最初の一株はどう選ぶか、失敗しにくい3つの条件</h3><span class="len">5分</span></a></li>
+          <li><a href="#journal"><time datetime="2026-09-14">2026.09.14</time><span class="cat">育て方</span><h3>塊根植物の冬越し、水を切るタイミング</h3><span class="len">6分</span></a></li>
+          <li><a href="#journal"><time datetime="2026-08-30">2026.08.30</time><span class="cat">栽培記録</span><h3>グラキリスの発根管理、92日間の記録</h3><span class="len">9分</span></a></li>
+          <li><a href="#journal"><time datetime="2026-08-11">2026.08.11</time><span class="cat">部屋づくり</span><h3>黒い鉢と古材で、一株を主役にする置き方</h3><span class="len">4分</span></a></li>
+          <li><a href="#journal"><time datetime="2026-07-26">2026.07.26</time><span class="cat">はじめて</span><h3>最初にそろえる道具は、鉢と土とジョウロだけ</h3><span class="len">4分</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="room">
+    <figure class="room-photo wrap">
+      <img src="img/shelf.jpg" width="1200" height="802" alt="窓辺の薄暗い棚で、小さな多肉質の葉を茂らせた塊根植物と、奥に並ぶ株" loading="lazy">
+    </figure>
+    <div class="wrap room">
+      <div class="room-intro">
+        <h2>鉢と部屋</h2>
+        <p>植物のかたちがいちばん映えるのは、手を加えすぎていない素材の横だと思っています。</p>
+        <p>削り跡の残る木、焼締めの土、錆びた鉄、ざらついた壁。原始的な質感の道具と並べると、塊根の肌や棘の影がよく見えてきます。</p>
+      </div>
+      <dl class="materials">
+        <div><dt>黒い鉢</dt><dd>焼締めや炭化させたような黒い鉢は、塊根の白っぽい肌と緑の葉をいちばん引き立てます。歪みや凹みのある手びねりを選んでいます。</dd></div>
+        <div><dt>歯車と古材</dt><dd>鉢の下には古い鋳物の歯車や古材を敷いています。床から少し浮かせるだけで、株の輪郭が壁の前に立ち上がります。</dd></div>
+        <div><dt>土壁と光</dt><dd>白い壁より少し暗い土色の壁のほうが、昼の斜めの光で棘の影がくっきり出ます。窓から1m以内が定位置です。</dd></div>
+        <div><dt>化粧石</dt><dd>表土には黒の溶岩砂利か、赤玉土の硬質小粒。鉢の色と同系にすると植物だけが浮かびます。</dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<section class="insta" id="instagram">
+  <div class="wrap">
+    <div>
+      <h2>Instagramで、毎週の姿を</h2>
+      <p>新芽が出た日、落葉が始まった日、植え替えの根の様子を、写真で毎週記録しています。育て方で迷ったらDMで気軽に聞いてください。フォローすると、季節ごとの手入れの時期が自然と分かるようになります。</p>
+      <div class="actions">
+        <a class="btn" href="https://www.instagram.com/{{HANDLE}}/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#ig"/></svg>@{{HANDLE}} をフォロー</a>
+        <button class="copy" type="button" data-copy="@{{HANDLE}}">IDをコピー</button>
+      </div>
+    </div>
+    <figure class="insta-photo">
+      <img src="img/spines.jpg" width="1440" height="960" alt="細い棘が放射状に伸びる幹と、産毛のある葉の接写">
+      <figcaption><span class="latin">Pachypodium</span>　棘と新しい葉</figcaption>
+    </figure>
+  </div>
+</section>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <span>{{NAME}}　塊根植物・多肉植物・サボテンの記録</span>
+    <span>© 2026 {{HANDLE}}</span>
+  </div>
+</footer>
+
+<div class="follow-bar">
+  <span>育て方の質問もDMで歓迎</span>
+  <a class="btn" href="https://www.instagram.com/{{HANDLE}}/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#ig"/></svg>フォロー</a>
+</div>
