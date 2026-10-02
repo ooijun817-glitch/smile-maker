@@ -18,14 +18,17 @@
   document.querySelectorAll("[data-copy]").forEach((btn) => {
     btn.addEventListener("click", async () => {
       const text = btn.dataset.copy;
-      const label = btn.textContent;
+      // 連続で押しても元の文言に戻るよう、最初の表示を覚えておく
+      btn.dataset.label ??= btn.textContent;
       try {
         await navigator.clipboard.writeText(text);
         btn.textContent = "コピーしました";
       } catch {
+        // コピーできない環境では、IDを表示して手で写せるようにする
         btn.textContent = text;
       }
-      setTimeout(() => { btn.textContent = label; }, 1800);
+      clearTimeout(btn._reset);
+      btn._reset = setTimeout(() => { btn.textContent = btn.dataset.label; }, 2400);
     });
   });
 })();
