@@ -3,10 +3,11 @@
   --wall: #d3cbbe;      /* 土壁 */
   --plaster: #e2dcd1;   /* 漆喰（面） */
   --ink: #24211d;       /* 墨 */
-  --ash: #6f675c;       /* 灰（補助文字） */
+  --ash: #59524a;       /* 灰（補助文字）。土壁の上でも文字のコントラスト4.5以上 */
   --clay: #9a8a75;      /* 素焼き */
   --lichen: #56633f;    /* 苔 */
   --lichen-soft: #a9b08f;
+  --on-lichen: #fbf8f2; /* 苔の上の文字 */
   --line: rgba(36, 33, 29, .22);
   --band: #2b2722;      /* 炭（Instagram帯） */
   --band-fg: #e3dccf;
@@ -25,13 +26,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --wall: #1f1c19; --plaster: #2a2622; --ink: #e4ddd0; --ash: #a39a8c; --clay: #7a6d5d;
-    --lichen: #a3b083; --lichen-soft: #4d5639; --line: rgba(228, 221, 208, .2);
+    --lichen: #a3b083; --lichen-soft: #4d5639; --on-lichen: #1f1c19; --line: rgba(228, 221, 208, .2);
     --band: #14120f; --band-fg: #e4ddd0; --photo-blend: normal; --mark-edge: rgba(228, 221, 208, .4); color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --wall: #1f1c19; --plaster: #2a2622; --ink: #e4ddd0; --ash: #a39a8c; --clay: #7a6d5d;
-  --lichen: #a3b083; --lichen-soft: #4d5639; --line: rgba(228, 221, 208, .2);
+  --lichen: #a3b083; --lichen-soft: #4d5639; --on-lichen: #1f1c19; --line: rgba(228, 221, 208, .2);
   --band: #14120f; --band-fg: #e4ddd0; --photo-blend: normal; --mark-edge: rgba(228, 221, 208, .4); color-scheme: dark;
 }
 
@@ -64,7 +65,7 @@ p { margin: 0; }
   font: 500 .9375rem/1 var(--f-body); text-decoration: none; border: 0; cursor: pointer;
   transition: background-color .2s;
 }
-.btn:hover { background: var(--lichen); }
+.btn:hover { background: var(--lichen); color: var(--on-lichen); }
 .btn svg { width: 1.15em; height: 1.15em; flex: none; }
 .btn--ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
 .btn--ghost:hover { background: var(--ink); color: var(--wall); }
@@ -207,7 +208,7 @@ p { margin: 0; }
 .insta p { opacity: .8; max-width: 26em; }
 .insta .actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 32px; }
 .insta .btn { background: var(--band-fg); color: var(--band); }
-.insta .btn:hover { background: var(--lichen-soft); color: var(--band-fg); }
+.insta .btn:hover { background: var(--lichen); color: var(--on-lichen); }
 .copy { font: 500 .875rem/1 var(--f-body); background: transparent; color: var(--band-fg); border: 1px solid rgba(227, 220, 207, .35); border-radius: 999px; padding: .85em 1.2em; cursor: pointer; }
 .copy:hover { border-color: var(--band-fg); }
 .insta-photo { margin: 0; aspect-ratio: 4 / 5; max-width: 100%; overflow: hidden; }
@@ -254,5 +255,6 @@ p { margin: 0; }
   }
   .follow-bar span { flex: 1; min-width: 0; }
   .follow-bar .btn { background: var(--band-fg); color: var(--band); padding: .6em 1em; font-size: .8125rem; }
+  .follow-bar .btn:hover { background: var(--lichen); color: var(--on-lichen); }
 }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

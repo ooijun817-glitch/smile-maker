@@ -59,7 +59,7 @@ desc = "塊根植物・多肉植物・サボテンの育て方と、黒い鉢や
 <meta property="og:type" content="website">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
-<meta name="theme-color" content="#d3cbbe">
+<meta name="theme-color" content="#d3cbbe">\n<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' fill='%23fff' text-anchor='middle'%3Esm%3C/text%3E%3C/svg%3E">
 {fonts}
 <link rel="stylesheet" href="style.css">
 </head>
