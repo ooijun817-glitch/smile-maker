@@ -1,0 +1,18 @@
+{
+  "segment": "seg1",
+  "service": "Figma Weave",
+  "model": "Kling First & Last Frame O1 Pro",
+  "run_id": "9eebe348-3883-4886-bed1-748e81f75557",
+  "duration": "5",
+  "first": "1-great-wave.jpg",
+  "tail": "2-red-fuji.jpg",
+  "prompt": "The Great Wave rises higher and higher as if alive, its claw-like foam curling forward over the boats while the rowers brace low; the camera pushes in toward the crest. The wave crashes and its white foam scatters upward into the sky, where the flecks of foam spread out and settle into rows of white mackerel clouds on a deep blue sky. The sea falls away and the small snowy Mount Fuji in the distance rises and grows into a huge mountain glowing red at dawn. A sweep of morning light glides across the red slopes as the camera settles on the whole view. One continuous transformation, not a fade or dissolve. Motion design for a large digital signage screen in a modern train station concourse: dynamic cinematic camera moves, layered parallax depth, crisp confident timing, and a refined, elegant Japanese atmosphere. Everything moves as if truly alive. Keep the flat ukiyo-e look: crisp ink outlines, flat colors, washi paper texture, no realistic shading.",
+  "negative_prompt": "smiling, grin, laughing, cartoon, anime, photorealistic, 3D render, CGI, realistic lighting, lens flare, text, subtitles, logo, watermark, extra people, deformed face, deformed hands, extra fingers, blurry, low quality, flicker, crossfade, dissolve, double exposure, ghosting, shadow figure",
+  "video": {
+    "width": 1752,
+    "height": 1180,
+    "fps": 24.0,
+    "frames": 122
+  },
+  "made_at": "2026-10-28 21:24:11"
+}
