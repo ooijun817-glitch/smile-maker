@@ -1,0 +1,15 @@
+{
+  "_説明": "各区間の指示文。いただいた指示文をここに貼ってください。空のままだとその区間は作りません。",
+  "seg1": {
+    "prompt": "",
+    "negative_prompt": ""
+  },
+  "seg2": {
+    "prompt": "",
+    "negative_prompt": ""
+  },
+  "seg3": {
+    "prompt": "",
+    "negative_prompt": ""
+  }
+}

@@ -1,0 +1,9 @@
+# Kling の鍵。絶対に保存しない
+.env
+# 作業中のファイル(ダウンロードした元画像、途中のコマなど)
+work/
+# Xcode が作るもの
+ios/**/xcuserdata/
+ios/**/*.xcworkspace/xcuserdata/
+DerivedData/
+.DS_Store
