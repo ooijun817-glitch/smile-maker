@@ -4,8 +4,8 @@
 全画面・音なしでくり返し流す。駅のデジタルサイネージのように、趣きある日本と現代らしさ、生きるが如くのダイナミックな動きで目を引く。
 自分で使うだけのアプリで、App Store には出さない。
 
-流れ(1周 約34秒):北斎肖像 → 神奈川沖浪裏 → 赤富士 → 八方睨み鳳凰図 → 駿州江尻 → 写楽
-→ 洗馬(広重)→ 北斎肖像に戻る(1秒の重ね合わせで最初へ)。くわしくは [STORYBOARD.md](STORYBOARD.md)。
+流れ(1周 約34秒):神奈川沖浪裏 → 赤富士 → 八方睨み鳳凰図 → 写楽 → 北斎肖像 → 駿州江尻
+→ 洗馬(広重)→ 神奈川沖浪裏に戻る(1秒の重ね合わせで最初へ)。くわしくは [STORYBOARD.md](STORYBOARD.md)。
 
 ## フォルダ
 
@@ -33,10 +33,10 @@
 ### 3. 区間を1つずつ作る
 ```
 python3 tools/make_segment.py seg1 --dry-run   # 送る内容の確認だけ
-python3 tools/make_segment.py seg1             # 北斎肖像から始め、神奈川沖浪裏に着地(5秒、約0.35ドルの見込み)
-python3 tools/make_segment.py seg2             # 区間1の最後のコマから始め、赤富士に着地
+python3 tools/make_segment.py seg1             # 神奈川沖浪裏から始め、赤富士に着地(5秒、約0.35ドルの見込み)
+python3 tools/make_segment.py seg2             # 区間1の最後のコマから始め、八方睨み鳳凰図に着地
 …
-python3 tools/make_segment.py seg7             # 区間6の最後のコマから始め、北斎肖像に着地
+python3 tools/make_segment.py seg7             # 区間6の最後のコマから始め、神奈川沖浪裏に着地
 ```
 気に入らなければ、同じ区間をもう一度作れば上書きされる。ある区間を作り直したら、そのあとの区間も作り直す。
 

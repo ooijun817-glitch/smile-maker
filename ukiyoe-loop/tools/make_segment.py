@@ -4,10 +4,11 @@
     python3 tools/make_segment.py seg2 --dry-run  # 送る内容だけ確かめる(Kling には送らない)
 
 区間ごとの「最初の絵」と「最後の絵」:
-  seg1  最初=北斎肖像              最後=神奈川沖浪裏
+  seg1  最初=神奈川沖浪裏          最後=赤富士
   seg2〜seg7  最初=前の区間の最後のコマ  最後=次の絵(本物の絵に着地させる)
-      seg2→赤富士 / seg3→八方睨み鳳凰図 / seg4→駿州江尻 / seg5→写楽 / seg6→洗馬 / seg7→北斎肖像
-  seg7 は最初の絵(北斎肖像)に着地するので、一周の終わりと始まりが同じ絵になる。
+      seg2→八方睨み鳳凰図 / seg3→写楽 / seg4→北斎肖像 / seg5→駿州江尻 / seg6→洗馬 / seg7→神奈川沖浪裏
+  seg7 は最初の絵(神奈川沖浪裏)に着地するので、一周の終わりと始まりが同じ絵になる。
+  隣どうしの絵に共通点(富士、赤と金、目、人物、風、水と舟)があるように並べている。
 
 できるもの(segments/):
   segN.mp4        Kling から受け取った動画
@@ -35,9 +36,9 @@ IMAGES = ROOT / "images"
 SEGMENTS = ROOT / "segments"
 
 # 区間の着地点になる絵(images/ になければ、仮の素材から作った work/images/ を使う)
-FIRST = "1-hokusai-portrait.jpg"
-TAILS = ["2-great-wave.jpg", "3-red-fuji.jpg", "4-phoenix.jpg", "5-ejiri.jpg", "6-sharaku.jpg",
-         "7-seba.jpg", "1-hokusai-portrait.jpg"]
+FIRST = "1-great-wave.jpg"
+TAILS = ["2-red-fuji.jpg", "3-phoenix.jpg", "4-sharaku.jpg", "5-hokusai-portrait.jpg", "6-ejiri.jpg",
+         "7-seba.jpg", "1-great-wave.jpg"]
 
 
 def image_path(name):
