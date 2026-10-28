@@ -4,9 +4,9 @@
     python3 tools/make_segment.py seg2 --dry-run  # 送る内容だけ確かめる(Kling には送らない)
 
 区間ごとの「最初の絵」と「最後の絵」:
-  seg1  最初=神奈川沖浪裏                 最後=指定なし(波が高く立ち上がったところで終わる)
-  seg2  最初=区間1の最後のコマ             最後=赤富士(本物の絵に着地させる)
-  seg3  最初=区間2の最後のコマ             最後=駿州江尻(本物の絵に着地させる)
+  seg1  最初=神奈川沖浪裏          最後=指定なし(波が高く立ち上がったところで終わる)
+  seg2〜seg7  最初=前の区間の最後のコマ  最後=次の絵(本物の絵に着地させる)
+      seg2→赤富士 / seg3→鳳凰図屏風 / seg4→駿州江尻 / seg5→写楽 / seg6→洗馬 / seg7→北斎肖像
 
 できるもの(segments/):
   segN.mp4        Kling から受け取った動画
@@ -33,11 +33,22 @@ ROOT = kling.ROOT
 IMAGES = ROOT / "images"
 SEGMENTS = ROOT / "segments"
 
-PLAN = {
-    "seg1": {"first": IMAGES / "1-great-wave.jpg", "tail": None},
-    "seg2": {"first": SEGMENTS / "seg1_last.png", "tail": IMAGES / "2-red-fuji.jpg"},
-    "seg3": {"first": SEGMENTS / "seg2_last.png", "tail": IMAGES / "3-ejiri.jpg"},
-}
+# 区間の着地点になる絵(images/ になければ、仮の素材から作った work/images/ を使う)
+TAILS = [None, "2-red-fuji.jpg", "3-phoenix.jpg", "4-ejiri.jpg", "5-sharaku.jpg",
+         "6-seba.jpg", "7-hokusai-portrait.jpg"]
+
+
+def image_path(name):
+    path = IMAGES / name
+    return path if path.exists() else ROOT / "work" / "images" / name
+
+
+PLAN = {}
+for i, tail in enumerate(TAILS, start=1):
+    PLAN[f"seg{i}"] = {
+        "first": image_path("1-great-wave.jpg") if i == 1 else SEGMENTS / f"seg{i - 1}_last.png",
+        "tail": image_path(tail) if tail else None,
+    }
 DURATION = "5"
 
 

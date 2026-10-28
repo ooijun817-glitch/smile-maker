@@ -1,13 +1,13 @@
-"""3つの区間をつないで、くり返し再生用の1本にする。
+"""区間(seg1, seg2, …)を順につないで、くり返し再生用の1本にする。
 
     python3 tools/join.py
     python3 tools/join.py --out 出力.mp4 a.mp4 b.mp4 c.mp4   # 区間を指定するとき
 
 つなぎ方:
-- 区間2・3は「前の区間の最後のコマ」から始まるので、先頭の1コマが前の区間の
+- 区間2以降は「前の区間の最後のコマ」から始まるので、先頭の1コマが前の区間の
   最後と重なる。そのままつなぐと同じ絵が2コマ続いて一瞬止まって見えるため、
-  区間2・3の先頭1コマを捨ててからつなぐ。
-- 最後(江尻)から最初(波)へ戻るところは、1秒の重ね合わせにする。
+  区間2以降の先頭1コマを捨ててからつなぐ。
+- 最後(北斎肖像)から最初(波)へ戻るところは、1秒の重ね合わせにする。
   つないだ全体を S(N コマ)、重ね合わせを F コマとすると、出来上がりは
       [S の最後の F コマ と 最初の F コマ を重ねたもの] + [S の F 〜 N-F コマ]
   になる。最後のコマ(S の N-F-1)の次に先頭(S の N-F)が来るので、くり返し
@@ -21,7 +21,7 @@ import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_IN = [ROOT / "segments" / f"seg{i}.mp4" for i in (1, 2, 3)]
+DEFAULT_IN = sorted((ROOT / "segments").glob("seg[0-9]*.mp4"), key=lambda p: int(p.stem[3:]))
 DEFAULT_OUT = ROOT / "ios" / "HokusaiLoop" / "hokusai-loop.mp4"
 CROSSFADE_SECONDS = 1.0
 

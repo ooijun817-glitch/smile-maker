@@ -1,15 +1,32 @@
 {
-  "_説明": "各区間の指示文。いただいた指示文をここに貼ってください。空のままだとその区間は作りません。",
+  "_説明": "区間ごとの指示文(下書き)。Kling は英語の指示がいちばん伝わりやすいので英語で書き、日本語の意味は STORYBOARD.md に載せている。直したいところは STORYBOARD.md を見ながら書き換える。",
+  "_共通の避けたいこと": "negative_prompt は全区間で同じものを使う。",
   "seg1": {
-    "prompt": "",
-    "negative_prompt": ""
+    "prompt": "Hokusai's woodblock print 'The Great Wave off Kanagawa' bursts into motion from the very first frame. The giant wave surges upward and towers higher and higher, its claw-like white foam curling forward over the three boats. Spray explodes into the sky and the rowers duck low in their boats. Mount Fuji stays small and still in the distance. The camera starts on the full print and pushes in steadily toward the curling crest. Bold, dramatic, eye-catching motion. Keep the flat ukiyo-e woodblock look: Prussian blue, cream paper texture, crisp dark outlines, no realistic shading.",
+    "negative_prompt": "photorealistic, 3D render, CGI water, realistic lighting, text, subtitles, logo, watermark, extra people, deformed faces, deformed hands, blurry, low quality, flicker"
   },
   "seg2": {
-    "prompt": "",
-    "negative_prompt": ""
+    "prompt": "The towering wave crashes down and a burst of white spray sweeps across the entire frame, covering everything in white foam. The spray thins and drifts away like clouds, and the sky clears to reveal Mount Fuji glowing red at dawn under rows of white mackerel clouds on a deep blue sky. The camera pulls back to show the whole print. Powerful, fast motion at the start, calm at the end. Flat ukiyo-e woodblock print style, crisp outlines, paper texture.",
+    "negative_prompt": "photorealistic, 3D render, CGI water, realistic lighting, text, subtitles, logo, watermark, extra people, deformed faces, deformed hands, blurry, low quality, flicker"
   },
   "seg3": {
-    "prompt": "",
-    "negative_prompt": ""
+    "prompt": "The red slopes of Mount Fuji begin to glow and shimmer into gold. The white clouds swirl and turn into sparkling flakes of gold leaf that fill the screen. Out of the golden light a magnificent phoenix sweeps in and spreads its wings: green scale-like breast feathers, red and blue wing plumes, long flowing tail feathers with eye patterns, set against a gold-leaf folding screen. The camera glides with the phoenix as it settles into place. Majestic, eye-catching motion. Japanese painted folding screen style, gold leaf, rich mineral colors, crisp outlines.",
+    "negative_prompt": "photorealistic, 3D render, CGI bird, realistic feathers, realistic lighting, text, subtitles, logo, watermark, deformed, blurry, low quality, flicker"
+  },
+  "seg4": {
+    "prompt": "The phoenix beats its great wings once and a powerful gust of wind bursts out. The gold background blows away like a storm of leaves, revealing a windswept marsh road under a pale sky with the faint white outline of Mount Fuji. Travelers lean hard into the wind, clutching their hats and robes; sheets of paper and a straw hat fly up and tumble across the sky; the tall thin trees bend and their leaves scatter. Lively, playful, eye-catching motion of the people. Flat ukiyo-e woodblock print style by Hokusai, crisp outlines, paper texture.",
+    "negative_prompt": "photorealistic, 3D render, realistic lighting, text, subtitles, logo, watermark, extra people, deformed faces, deformed hands, blurry, low quality, flicker"
+  },
+  "seg5": {
+    "prompt": "The flying sheets of paper rush toward the camera and cover the whole screen. As they fall away, a kabuki actor appears against a plain dark grey mica background: the villain Edobei, with a fierce glare, crossed eyes and a tightly clenched mouth. He lunges forward and thrusts both hands out with fingers spread wide in a dramatic mie pose, and his striped robe swings. The camera pushes in toward his face for a moment, then settles on the full figure. Striking, eye-catching motion. Ukiyo-e actor print style by Sharaku, flat colors, crisp outlines, no realistic shading.",
+    "negative_prompt": "photorealistic, 3D render, realistic face, realistic lighting, text, subtitles, logo, watermark, extra people, deformed face, extra fingers, deformed hands, blurry, low quality, flicker"
+  },
+  "seg6": {
+    "prompt": "The actor freezes in his pose and the screen darkens as if a theater curtain has fallen. In the darkness a pale full moon rises, and a quiet night river scene fades in: willow trees sway in the wind on the riverbank, a boatman poles a cargo boat through the reeds, another man poles a long raft behind him, and pink and blue clouds drift slowly past the moon. Calm, slow, beautiful motion after the excitement. Flat ukiyo-e landscape print style by Hiroshige, crisp outlines, paper texture.",
+    "negative_prompt": "photorealistic, 3D render, realistic water, realistic lighting, text, subtitles, logo, watermark, extra people, deformed, blurry, low quality, flicker"
+  },
+  "seg7": {
+    "prompt": "The moonlight softens and the night scene gently dissolves into pale cream paper. An elderly bald man in a green robe, the painter Hokusai, appears seated on the plain paper. He slowly lifts his gaze, smiles warmly as if he has just finished dreaming all of these pictures, and rests his hands in his lap. Gentle, warm, slow motion with a calm ending. Light Japanese brush painting style, soft colors on paper, crisp ink outlines.",
+    "negative_prompt": "photorealistic, 3D render, realistic face, realistic lighting, text, subtitles, logo, watermark, extra people, deformed face, deformed hands, blurry, low quality, flicker"
   }
 }
