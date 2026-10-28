@@ -5,9 +5,9 @@
 
 区間ごとの「最初の絵」と「最後の絵」:
   seg1  最初=北斎肖像              最後=神奈川沖浪裏
-  seg2〜seg6  最初=前の区間の最後のコマ  最後=次の絵(本物の絵に着地させる)
-      seg2→赤富士 / seg3→駿州江尻 / seg4→写楽 / seg5→洗馬 / seg6→北斎肖像
-  seg6 は最初の絵(北斎肖像)に着地するので、一周の終わりと始まりが同じ絵になる。
+  seg2〜seg7  最初=前の区間の最後のコマ  最後=次の絵(本物の絵に着地させる)
+      seg2→赤富士 / seg3→八方睨み鳳凰図 / seg4→駿州江尻 / seg5→写楽 / seg6→洗馬 / seg7→北斎肖像
+  seg7 は最初の絵(北斎肖像)に着地するので、一周の終わりと始まりが同じ絵になる。
 
 できるもの(segments/):
   segN.mp4        Kling から受け取った動画
@@ -36,8 +36,8 @@ SEGMENTS = ROOT / "segments"
 
 # 区間の着地点になる絵(images/ になければ、仮の素材から作った work/images/ を使う)
 FIRST = "1-hokusai-portrait.jpg"
-TAILS = ["2-great-wave.jpg", "3-red-fuji.jpg", "4-ejiri.jpg", "5-sharaku.jpg", "6-seba.jpg",
-         "1-hokusai-portrait.jpg"]
+TAILS = ["2-great-wave.jpg", "3-red-fuji.jpg", "4-phoenix.jpg", "5-ejiri.jpg", "6-sharaku.jpg",
+         "7-seba.jpg", "1-hokusai-portrait.jpg"]
 
 
 def image_path(name):
