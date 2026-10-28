@@ -54,7 +54,7 @@ STILL = [
 ]
 
 # ぼかし幅(絵の幅に対する割合)
-BLUR = {"wave": 0.06, "claws": 0.035, "sea": 0.035, "still": 0.015}
+BLUR = {"wave": 0.06, "claws": 0.05, "sea": 0.035, "still": 0.015}
 
 
 def load_source(arg):

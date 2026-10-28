@@ -33,8 +33,9 @@
     attribute vec2 aPos;
     uniform vec2 uFit;      // 画面に「収める」ための縮尺
     varying vec2 vUv;
-    // 絵の外周を 2% ずつ隠す。端で絵の外を引き込んで縁がにじむのを見せないため。
-    const float CROP = 0.02;
+    // 絵の外周をほんの少しだけ隠す(縁の 1 画素のにじみ対策)。
+    // 左端の落款にかかるので、これ以上は大きくしない。
+    const float CROP = 0.004;
     void main() {
       vUv = CROP + (1.0 - 2.0 * CROP) * vec2(aPos.x * 0.5 + 0.5, 0.5 - aPos.y * 0.5);
       gl_Position = vec4(aPos * uFit, 0.0, 1.0);
@@ -53,27 +54,33 @@
 
     const float TAU = 6.28318530718;
 
-    // 大波のうねり:長い波長のずれが、左下から波頭へ向かってゆっくり伝わる。
-    // あわせて波全体が根元を支点に持ち上がり、また沈む(呼吸)。
+    // 大波のうねり。
+    // 主役は「根元を支点に、波頭がのめり込んでは起き上がる」回転。回転は絵を
+    // ひとかたまりのまま動かすので、大きく動かしても線が伸び縮みしにくい。
+    // そこに少しの伸び上がりと、左下から波頭へ伝わる長い波長のずれを重ねる。
+    const vec2 PIVOT = vec2(0.45, 0.80);   // 波の根元(縦横比をそろえた座標)
     vec2 swell(vec2 q, float p) {
-      vec2 d;
-      d.x = sin(TAU * (0.55 * q.x - 0.45 * q.y) - p);
-      d.y = sin(TAU * (0.40 * q.x - 0.60 * q.y) - p + 1.2);
-      d *= 0.0120;
-      vec2 pivot = vec2(0.45, 0.80);
-      d += (q - pivot) * 0.0280 * sin(p + 0.6);
-      return d;
+      vec2 r = q - PIVOT;
+      float ang = 0.050 * sin(p + 0.6);    // 最大およそ 3 度
+      float c = cos(ang), s = sin(ang);
+      vec2 rot = vec2(c * r.x + s * r.y, -s * r.x + c * r.y);
+      vec2 d = r - rot;
+      d += r * 0.020 * sin(p - 0.9);        // 伸び上がっては縮む
+      vec2 w;
+      w.x = sin(TAU * (0.55 * q.x - 0.45 * q.y) - p);
+      w.y = sin(TAU * (0.40 * q.x - 0.60 * q.y) - p + 1.2);
+      return d + w * 0.020;
     }
 
-    // 波の先(爪):うねりより短い波長で、倍の速さ。うねりに上乗せして大きめに揺らす。
-    // 波長を短くしすぎると爪の一本一本が別々に伸び縮みして線が崩れるので、ほどほどに。
+    // 波の先(爪):うねりの倍の速さで、上乗せして揺らす。
+    // 波長を短くすると爪の一本一本が別々に伸び縮みして線が崩れるので、長めにとる。
     vec2 claws(vec2 q, float p) {
       vec2 d;
-      d.x = sin(TAU * (1.0 * q.x + 0.7 * q.y) - 2.0 * p)
-          + 0.5 * sin(TAU * (1.4 * q.y - 0.4 * q.x) - p + 0.8);
-      d.y = sin(TAU * (0.7 * q.x - 1.0 * q.y) - 2.0 * p + 2.1)
-          + 0.5 * sin(TAU * (1.2 * q.x + 0.5 * q.y) - p + 2.9);
-      return d * 0.0110;
+      d.x = sin(TAU * (0.7 * q.x + 0.5 * q.y) - 2.0 * p)
+          + 0.5 * sin(TAU * (0.9 * q.y - 0.3 * q.x) - p + 0.8);
+      d.y = sin(TAU * (0.5 * q.x - 0.7 * q.y) - 2.0 * p + 2.1)
+          + 0.5 * sin(TAU * (0.8 * q.x + 0.4 * q.y) - p + 2.9);
+      return d * 0.018;
     }
 
     void main() {
@@ -85,8 +92,9 @@
       vec2 d = m.r * swell(q, uPhase) + m.g * claws(q, uPhase);
       d *= uAmp;
       d.x /= uAspect;
-      // 絵の縁に近いほど動きを弱め、絵の外を引き込まないようにする。
-      vec2 e = smoothstep(0.0, 0.07, uv) * smoothstep(0.0, 0.07, 1.0 - uv);
+      // 絵の縁に近いほど動きを弱める。ずれの最大(およそ 0.08)より縁からの距離が
+      // 常に大きくなるので、絵の外を引き込むことはない。
+      vec2 e = smoothstep(0.0, 0.10, uv) * smoothstep(0.0, 0.10, 1.0 - uv);
       d *= e.x * e.y;
 
       vec3 col = texture2D(uImg, uv - d).rgb;
