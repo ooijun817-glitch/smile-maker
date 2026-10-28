@@ -17,7 +17,7 @@ import sys
 import urllib.request
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 SOURCE_URL = "https://images.metmuseum.org/CRDImages/as/original/DP130155.jpg"
 LONG_SIDE = 3000
@@ -27,15 +27,36 @@ ROOT = Path(__file__).resolve().parent.parent
 ASSETS = ROOT / "assets"
 
 # ---- 範囲(絵を見ながら調整する) ----
-# 大波:波の胴体全体。富士山と小舟の上半分にはかからないようにする。
-WAVE = []
-# 波の先:白い爪が並ぶ部分だけ。
-CLAWS = []
+# 大波:背から波頭、内側の面、根元まで。左の小舟の上は避ける。
+WAVE = [[
+    (0.00, 0.40), (0.05, 0.35), (0.11, 0.30), (0.17, 0.23), (0.23, 0.16),
+    (0.30, 0.11), (0.38, 0.09), (0.45, 0.11), (0.52, 0.17), (0.57, 0.25),
+    (0.59, 0.33), (0.55, 0.41), (0.48, 0.42), (0.43, 0.47), (0.42, 0.56),
+    (0.43, 0.64), (0.40, 0.72), (0.30, 0.76), (0.23, 0.70), (0.17, 0.58),
+    (0.09, 0.46), (0.00, 0.44),
+]]
+# 波の先:波頭の縁で、白い爪が空に向かって並ぶ部分。
+CLAWS = [[
+    (0.22, 0.24), (0.27, 0.17), (0.34, 0.10), (0.41, 0.08), (0.48, 0.12),
+    (0.55, 0.20), (0.60, 0.28), (0.60, 0.37), (0.55, 0.43), (0.49, 0.40),
+    (0.45, 0.30), (0.40, 0.20), (0.33, 0.20), (0.27, 0.27),
+]]
 # 海面:手前の波と小舟のあたり(次の段階で使う)。
 SEA = []
 
+# 動かさないところ:富士山、題字と落款、小舟。ほかのマスクのぼかしがここに
+# にじみ出ても、最後にここだけはゼロへ戻す。
+STILL = [
+    [(0.54, 0.74), (0.60, 0.66), (0.625, 0.645), (0.65, 0.66), (0.71, 0.74)],  # 富士山
+    [(0.04, 0.05), (0.11, 0.05), (0.11, 0.31), (0.04, 0.31)],                  # 題字
+    [(0.01, 0.12), (0.045, 0.12), (0.045, 0.32), (0.01, 0.32)],                # 落款
+    [(0.02, 0.465), (0.06, 0.475), (0.15, 0.565), (0.25, 0.65), (0.255, 0.705),
+     (0.19, 0.745), (0.12, 0.69), (0.045, 0.555)],                              # 左の小舟
+]
+# 小舟は「波には」動かされないが、海面の段階では海と一緒に上下させる予定。
+
 # ぼかし幅(絵の幅に対する割合)
-BLUR = {"wave": 0.035, "claws": 0.02, "sea": 0.035}
+BLUR = {"wave": 0.035, "claws": 0.02, "sea": 0.035, "still": 0.008}
 
 
 def load_source(arg):
@@ -62,8 +83,9 @@ def main():
     art.save(ASSETS / "great-wave.jpg", quality=90, optimize=True, progressive=True)
 
     msize = (round(art.width * MASK_SCALE), round(art.height * MASK_SCALE))
-    r = paint(msize, WAVE, BLUR["wave"])
-    g = paint(msize, CLAWS, BLUR["claws"])
+    keep = ImageChops.invert(paint(msize, STILL, BLUR["still"]))
+    r = ImageChops.multiply(paint(msize, WAVE, BLUR["wave"]), keep)
+    g = ImageChops.multiply(paint(msize, CLAWS, BLUR["claws"]), keep)
     b = paint(msize, SEA, BLUR["sea"])
     masks = Image.merge("RGB", (r, g, b))
     masks.save(ASSETS / "masks.png", optimize=True)
@@ -74,7 +96,8 @@ def main():
     tint.paste((230, 40, 30), mask=big.getchannel("R"))
     tint.paste((30, 220, 60), mask=big.getchannel("G"))
     tint.paste((30, 80, 230), mask=big.getchannel("B"))
-    alpha = Image.eval(Image.merge("RGB", big.split()).convert("L"), lambda v: int(v * 0.5))
+    alpha = ImageChops.lighter(ImageChops.lighter(*big.split()[:2]), big.getchannel("B"))
+    alpha = Image.eval(alpha, lambda v: int(v * 0.55))
     Image.composite(tint, art, alpha).save(ASSETS / "mask-preview.jpg", quality=80)
     print("art", art.size, "masks", masks.size)
 
