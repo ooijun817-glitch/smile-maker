@@ -33,8 +33,10 @@
     attribute vec2 aPos;
     uniform vec2 uFit;      // 画面に「収める」ための縮尺
     varying vec2 vUv;
+    // 絵の外周を 2% ずつ隠す。端で絵の外を引き込んで縁がにじむのを見せないため。
+    const float CROP = 0.02;
     void main() {
-      vUv = vec2(aPos.x * 0.5 + 0.5, 0.5 - aPos.y * 0.5);
+      vUv = CROP + (1.0 - 2.0 * CROP) * vec2(aPos.x * 0.5 + 0.5, 0.5 - aPos.y * 0.5);
       gl_Position = vec4(aPos * uFit, 0.0, 1.0);
     }
   `;
@@ -51,26 +53,27 @@
 
     const float TAU = 6.28318530718;
 
-    // 大波のうねり:大きく長い波長のずれが、左下から波頭へ向かってゆっくり伝わる。
-    // あわせて波全体が根元を支点にわずかに持ち上がり、また沈む(呼吸)。
+    // 大波のうねり:長い波長のずれが、左下から波頭へ向かってゆっくり伝わる。
+    // あわせて波全体が根元を支点に持ち上がり、また沈む(呼吸)。
     vec2 swell(vec2 q, float p) {
       vec2 d;
       d.x = sin(TAU * (0.55 * q.x - 0.45 * q.y) - p);
       d.y = sin(TAU * (0.40 * q.x - 0.60 * q.y) - p + 1.2);
-      d *= 0.0050;
+      d *= 0.0120;
       vec2 pivot = vec2(0.45, 0.80);
-      d += (q - pivot) * 0.0110 * sin(p + 0.6);
+      d += (q - pivot) * 0.0280 * sin(p + 0.6);
       return d;
     }
 
-    // 波の先(爪):短い波長で、うねりの倍の速さ。少しだけ大きめ。
+    // 波の先(爪):うねりより短い波長で、倍の速さ。うねりに上乗せして大きめに揺らす。
+    // 波長を短くしすぎると爪の一本一本が別々に伸び縮みして線が崩れるので、ほどほどに。
     vec2 claws(vec2 q, float p) {
       vec2 d;
-      d.x = sin(TAU * (1.6 * q.x + 1.1 * q.y) - 2.0 * p)
-          + 0.5 * sin(TAU * (2.4 * q.y - 0.6 * q.x) - p + 0.8);
-      d.y = sin(TAU * (1.1 * q.x - 1.6 * q.y) - 2.0 * p + 2.1)
-          + 0.5 * sin(TAU * (2.0 * q.x + 0.7 * q.y) - p + 2.9);
-      return d * 0.0045;
+      d.x = sin(TAU * (1.0 * q.x + 0.7 * q.y) - 2.0 * p)
+          + 0.5 * sin(TAU * (1.4 * q.y - 0.4 * q.x) - p + 0.8);
+      d.y = sin(TAU * (0.7 * q.x - 1.0 * q.y) - 2.0 * p + 2.1)
+          + 0.5 * sin(TAU * (1.2 * q.x + 0.5 * q.y) - p + 2.9);
+      return d * 0.0110;
     }
 
     void main() {
@@ -82,6 +85,9 @@
       vec2 d = m.r * swell(q, uPhase) + m.g * claws(q, uPhase);
       d *= uAmp;
       d.x /= uAspect;
+      // 絵の縁に近いほど動きを弱め、絵の外を引き込まないようにする。
+      vec2 e = smoothstep(0.0, 0.07, uv) * smoothstep(0.0, 0.07, 1.0 - uv);
+      d *= e.x * e.y;
 
       vec3 col = texture2D(uImg, uv - d).rgb;
 
