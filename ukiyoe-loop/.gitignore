@@ -7,3 +7,8 @@ ios/**/xcuserdata/
 ios/**/*.xcworkspace/xcuserdata/
 DerivedData/
 .DS_Store
+# 区間の動画とコマの画像(仮の素材をもとにした部分を含むので、公開の場所には置かない)。
+# 作ったときの記録(segN.json)だけを保存する。
+segments/*.mp4
+segments/*.png
+segments/*.jpg
