@@ -6,7 +6,7 @@
 区間ごとの「最初の絵」と「最後の絵」:
   seg1  最初=神奈川沖浪裏                 最後=指定なし(波が高く立ち上がったところで終わる)
   seg2  最初=区間1の最後のコマ             最後=赤富士(本物の絵に着地させる)
-  seg3  最初=区間2の最後のコマ             最後=黒富士(本物の絵に着地させる)
+  seg3  最初=区間2の最後のコマ             最後=駿州江尻(本物の絵に着地させる)
 
 できるもの(segments/):
   segN.mp4        Kling から受け取った動画
@@ -36,7 +36,7 @@ SEGMENTS = ROOT / "segments"
 PLAN = {
     "seg1": {"first": IMAGES / "1-great-wave.jpg", "tail": None},
     "seg2": {"first": SEGMENTS / "seg1_last.png", "tail": IMAGES / "2-red-fuji.jpg"},
-    "seg3": {"first": SEGMENTS / "seg2_last.png", "tail": IMAGES / "3-black-fuji.jpg"},
+    "seg3": {"first": SEGMENTS / "seg2_last.png", "tail": IMAGES / "3-ejiri.jpg"},
 }
 DURATION = "5"
 

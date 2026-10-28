@@ -2,9 +2,9 @@
 
     python3 tools/prepare_images.py
 
-出力:images/1-great-wave.jpg, 2-red-fuji.jpg, 3-black-fuji.jpg(1920×1296)
+出力:images/1-great-wave.jpg, 2-red-fuji.jpg, 3-ejiri.jpg(1920×1296)
 
-- 赤富士・黒富士の画像には紙の余白が写っているので、印刷面だけを切り出す。
+- 赤富士・江尻の画像には紙の余白が写っているので、印刷面だけを切り出す。
   神奈川沖浪裏の画像は、はじめから印刷面だけ。
 - 3枚とも縦横比がわずかに違う(1.45〜1.49)。動画をつなぐときに大きさを
   そろえる必要があるので、1920×1296(約 1.48)に合わせる。合わない分は
@@ -27,7 +27,7 @@ SIZE = (1920, 1296)
 PRINTS = [
     ("1-great-wave.jpg", "DP130155", None),
     ("2-red-fuji.jpg", "DP141062", (109 + 25, 89 + 25, 3765 - 25, 2607 - 25)),
-    ("3-black-fuji.jpg", "DP141054", (57 + 25, 61 + 25, 3795 - 25, 2595 - 25)),
+    ("3-ejiri.jpg", "DP140977", (94 + 25, 106 + 25, 3877 - 25, 2702 - 25)),
 ]
 URL = "https://images.metmuseum.org/CRDImages/as/original/{}.jpg"
 
