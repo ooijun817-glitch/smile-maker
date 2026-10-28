@@ -12,11 +12,11 @@
 <style>
   html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
   body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
-  canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; display: block; }
+  video { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; }
 </style>
 </head>
 <body>
-<canvas id="c"></canvas>
-<script src="app.js"></script>
+<video id="v" src="assets/great-wave-loop.mp4" poster="assets/great-wave.jpg" autoplay muted loop playsinline disablepictureinpicture></video>
+<script src="player.js"></script>
 </body>
 </html>
