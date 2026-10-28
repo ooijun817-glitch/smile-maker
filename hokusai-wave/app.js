@@ -7,6 +7,7 @@
 //   ?debug=mask   マスクを色で重ねて表示(赤=大波, 緑=波の先, 青=海面)
 //   ?speed=4      再生速度を上げる(一周の確認用)
 //   ?amp=2        揺れ幅を何倍かにする
+//   #mask / #fast  上の debug=mask / 早送り と同じ(? が使えない場所用)
 
 (() => {
   'use strict';
@@ -16,8 +17,10 @@
   const MASK_URL = 'assets/masks.png';
 
   const params = new URLSearchParams(location.search);
-  const DEBUG_MASK = params.get('debug') === 'mask';
-  const SPEED = parseFloat(params.get('speed')) || 1;
+  // 確認ページ(アーティファクト)では ?… が使えないので、#mask / #fast でも切り替えられる。
+  const hash = location.hash.slice(1);
+  const DEBUG_MASK = params.get('debug') === 'mask' || hash === 'mask';
+  const SPEED = parseFloat(params.get('speed')) || (hash === 'fast' ? 6 : 1);
   const AMP = parseFloat(params.get('amp')) || 1;
 
   const canvas = document.getElementById('c');
@@ -54,20 +57,20 @@
       vec2 d;
       d.x = sin(TAU * (0.55 * q.x - 0.45 * q.y) - p);
       d.y = sin(TAU * (0.40 * q.x - 0.60 * q.y) - p + 1.2);
-      d *= 0.0014;
-      vec2 pivot = vec2(0.30, 0.95);
-      d += (q - pivot) * 0.0045 * sin(p + 0.6);
+      d *= 0.0050;
+      vec2 pivot = vec2(0.45, 0.80);
+      d += (q - pivot) * 0.0110 * sin(p + 0.6);
       return d;
     }
 
     // 波の先(爪):短い波長で、うねりの倍の速さ。少しだけ大きめ。
     vec2 claws(vec2 q, float p) {
       vec2 d;
-      d.x = sin(TAU * (3.0 * q.x + 2.0 * q.y) - 2.0 * p)
-          + 0.5 * sin(TAU * (5.0 * q.y - 1.0 * q.x) - p + 0.8);
-      d.y = sin(TAU * (2.0 * q.x - 3.0 * q.y) - 2.0 * p + 2.1)
-          + 0.5 * sin(TAU * (4.0 * q.x + 1.0 * q.y) - p + 2.9);
-      return d * 0.0016;
+      d.x = sin(TAU * (1.6 * q.x + 1.1 * q.y) - 2.0 * p)
+          + 0.5 * sin(TAU * (2.4 * q.y - 0.6 * q.x) - p + 0.8);
+      d.y = sin(TAU * (1.1 * q.x - 1.6 * q.y) - 2.0 * p + 2.1)
+          + 0.5 * sin(TAU * (2.0 * q.x + 0.7 * q.y) - p + 2.9);
+      return d * 0.0045;
     }
 
     void main() {

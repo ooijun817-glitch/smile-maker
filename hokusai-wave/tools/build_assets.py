@@ -56,7 +56,7 @@ STILL = [
 # 小舟は「波には」動かされないが、海面の段階では海と一緒に上下させる予定。
 
 # ぼかし幅(絵の幅に対する割合)
-BLUR = {"wave": 0.035, "claws": 0.02, "sea": 0.035, "still": 0.008}
+BLUR = {"wave": 0.035, "claws": 0.02, "sea": 0.035, "still": 0.015}
 
 
 def load_source(arg):
@@ -66,13 +66,18 @@ def load_source(arg):
         return Image.open(io.BytesIO(r.read()))
 
 
-def paint(size, polys, blur_frac):
+def paint(size, polys, blur_frac, grow=False):
+    """多角形を塗ってぼかす。grow=True のときは、ぼかしても元の形の内側が
+    ほぼ 1 のまま残るよう、先にぼかし幅の 2 倍だけ太らせておく。"""
     w, h = size
     im = Image.new("L", size, 0)
     d = ImageDraw.Draw(im)
     for poly in polys:
         d.polygon([(x * w, y * h) for x, y in poly], fill=255)
-    return im.filter(ImageFilter.GaussianBlur(blur_frac * w))
+    radius = blur_frac * w
+    if grow:
+        im = im.filter(ImageFilter.MaxFilter(int(radius * 2) * 2 + 1))
+    return im.filter(ImageFilter.GaussianBlur(radius))
 
 
 def main():
@@ -83,7 +88,7 @@ def main():
     art.save(ASSETS / "great-wave.jpg", quality=90, optimize=True, progressive=True)
 
     msize = (round(art.width * MASK_SCALE), round(art.height * MASK_SCALE))
-    keep = ImageChops.invert(paint(msize, STILL, BLUR["still"]))
+    keep = ImageChops.invert(paint(msize, STILL, BLUR["still"], grow=True))
     r = ImageChops.multiply(paint(msize, WAVE, BLUR["wave"]), keep)
     g = ImageChops.multiply(paint(msize, CLAWS, BLUR["claws"]), keep)
     b = paint(msize, SEA, BLUR["sea"])
