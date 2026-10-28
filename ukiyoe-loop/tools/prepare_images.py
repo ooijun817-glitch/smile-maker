@@ -2,7 +2,7 @@
 
     python3 tools/prepare_images.py [取得済みの元画像があるフォルダ]
 
-出力:images/1-great-wave.jpg 〜 7-hokusai-portrait.jpg
+出力:images/1-hokusai-portrait.jpg 〜 7-seba.jpg
 
 そろえ方は3通り:
 - fit  :横長の絵。紙の余白を切り、縦横比が合わない分は中央を残して端を少しだけ切る
@@ -33,14 +33,14 @@ MET = "https://images.metmuseum.org/CRDImages/as/original/{}.jpg"
 # (出力名, 元画像, そろえ方, 範囲 left, top, right, bottom ※元画像の画素)
 # 範囲は明るさの変わり目から求めた印刷面に、さらに数十 px 内側へ寄せたもの。
 PRINTS = [
-    ("1-great-wave.jpg", ("met", "DP130155"), "fit", None),
-    ("2-red-fuji.jpg", ("met", "DP141062"), "fit", (109 + 25, 89 + 25, 3765 - 25, 2607 - 25)),
-    ("3-phoenix.jpg", ("temp", "phoenix.jpg"), "crop", (430, 0, 793, 245)),
-    ("4-ejiri.jpg", ("met", "DP140977"), "fit", (94 + 25, 106 + 25, 3877 - 25, 2702 - 25)),
-    ("5-sharaku.jpg", ("met", "DP130228"), "pad", (44 + 20, 36 + 20, 2497 - 20, 3757 - 20)),
+    ("1-hokusai-portrait.jpg", ("temp", "hokusai-portrait.jpg"), "pad", (34, 22, 668, 960)),
+    ("2-great-wave.jpg", ("met", "DP130155"), "fit", None),
+    ("3-red-fuji.jpg", ("met", "DP141062"), "fit", (109 + 25, 89 + 25, 3765 - 25, 2607 - 25)),
+    ("4-phoenix.jpg", ("temp", "phoenix.jpg"), "crop", (430, 0, 793, 245)),
+    ("5-ejiri.jpg", ("met", "DP140977"), "fit", (94 + 25, 106 + 25, 3877 - 25, 2702 - 25)),
+    ("6-sharaku.jpg", ("met", "DP130228"), "pad", (44 + 20, 36 + 20, 2497 - 20, 3757 - 20)),
     # 洗馬は四隅が丸いので、角が入らないよう多めに内側へ寄せる
-    ("6-seba.jpg", ("met", "DP120447"), "fit", (93 + 70, 220 + 60, 3765 - 70, 2554 - 60)),
-    ("7-hokusai-portrait.jpg", ("temp", "hokusai-portrait.jpg"), "pad", (34, 22, 668, 960)),
+    ("7-seba.jpg", ("met", "DP120447"), "fit", (93 + 70, 220 + 60, 3765 - 70, 2554 - 60)),
 ]
 
 

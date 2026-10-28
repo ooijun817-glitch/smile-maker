@@ -1,12 +1,11 @@
 {
-  "_説明": "区間ごとの指示文(下書き)。Kling は英語の指示がいちばん伝わりやすいので英語で書き、日本語の意味は STORYBOARD.md に載せている。直したいところは STORYBOARD.md を見ながら書き換える。",
-  "_共通の避けたいこと": "negative_prompt は全区間で同じものを使う。",
+  "_説明": "区間ごとの指示文(下書き)。Kling は英語の指示がいちばん伝わりやすいので英語で書き、日本語の意味は STORYBOARD.md に載せている。順番:北斎肖像→神奈川沖浪裏→赤富士→鳳凰図屏風→駿州江尻→写楽→洗馬→北斎肖像。",
   "seg1": {
-    "prompt": "Hokusai's woodblock print 'The Great Wave off Kanagawa' bursts into motion from the very first frame. The giant wave surges upward and towers higher and higher, its claw-like white foam curling forward over the three boats. Spray explodes into the sky and the rowers duck low in their boats. Mount Fuji stays small and still in the distance. The camera starts on the full print and pushes in steadily toward the curling crest. Bold, dramatic, eye-catching motion. Keep the flat ukiyo-e woodblock look: Prussian blue, cream paper texture, crisp dark outlines, no realistic shading.",
-    "negative_prompt": "photorealistic, 3D render, CGI water, realistic lighting, text, subtitles, logo, watermark, extra people, deformed faces, deformed hands, blurry, low quality, flicker"
+    "prompt": "An elderly bald man in a green robe, the painter Hokusai, sits on plain cream paper. He looks up with a bright, knowing smile and lifts his hand as if holding a brush. Bold strokes of Prussian blue ink sweep across the paper behind him, swelling and curling into a giant wave with claw-like white foam. The ink wave rushes forward and fills the whole screen, and Hokusai fades away as the scene becomes the woodblock print 'The Great Wave off Kanagawa', with three boats and a small Mount Fuji in the distance. Striking, eye-catching transformation. Japanese brush painting turning into flat ukiyo-e woodblock print style, crisp outlines, paper texture.",
+    "negative_prompt": "photorealistic, 3D render, realistic face, CGI water, realistic lighting, text, subtitles, logo, watermark, extra people, deformed face, deformed hands, blurry, low quality, flicker"
   },
   "seg2": {
-    "prompt": "The towering wave crashes down and a burst of white spray sweeps across the entire frame, covering everything in white foam. The spray thins and drifts away like clouds, and the sky clears to reveal Mount Fuji glowing red at dawn under rows of white mackerel clouds on a deep blue sky. The camera pulls back to show the whole print. Powerful, fast motion at the start, calm at the end. Flat ukiyo-e woodblock print style, crisp outlines, paper texture.",
+    "prompt": "The Great Wave surges upward and towers higher and higher, its claw-like white foam curling forward over the boats while the rowers duck low. The camera pushes in toward the crest. Then the wave crashes down and a burst of white spray sweeps across the entire frame, covering everything. The spray thins and drifts away like clouds, and the sky clears to reveal Mount Fuji glowing red at dawn under rows of white mackerel clouds on a deep blue sky. The camera pulls back to show the whole print. Powerful, fast motion at the start, calm at the end. Flat ukiyo-e woodblock print style, crisp outlines, paper texture.",
     "negative_prompt": "photorealistic, 3D render, CGI water, realistic lighting, text, subtitles, logo, watermark, extra people, deformed faces, deformed hands, blurry, low quality, flicker"
   },
   "seg3": {
@@ -26,7 +25,7 @@
     "negative_prompt": "photorealistic, 3D render, realistic water, realistic lighting, text, subtitles, logo, watermark, extra people, deformed, blurry, low quality, flicker"
   },
   "seg7": {
-    "prompt": "The moonlight softens and the night scene gently dissolves into pale cream paper. An elderly bald man in a green robe, the painter Hokusai, appears seated on the plain paper. He slowly lifts his gaze, smiles warmly as if he has just finished dreaming all of these pictures, and rests his hands in his lap. Gentle, warm, slow motion with a calm ending. Light Japanese brush painting style, soft colors on paper, crisp ink outlines.",
+    "prompt": "The moonlight softens and the night river scene gently dissolves into pale cream paper. An elderly bald man in a green robe, the painter Hokusai, appears seated on the plain paper. He slowly lifts his gaze and smiles warmly, as if he has just finished dreaming all of these pictures, and rests his hands in his lap. Gentle, warm, slow motion with a calm ending that settles exactly on the portrait. Light Japanese brush painting style, soft colors on paper, crisp ink outlines.",
     "negative_prompt": "photorealistic, 3D render, realistic face, realistic lighting, text, subtitles, logo, watermark, extra people, deformed face, deformed hands, blurry, low quality, flicker"
   }
 }
