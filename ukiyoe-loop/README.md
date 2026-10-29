@@ -48,6 +48,17 @@ python3 tools/join.py
 `ios/HokusaiLoop/hokusai-loop.mp4` ができる。区間2以降の先頭1コマ(前の区間の最後と同じ絵)は
 捨てるので、つなぎ目で止まらない。
 
+### 4.5 画質を上げる(Figma Weave の Topaz Video Upscaler)
+つないだ動画を Weave に送り、Topaz Video Upscaler(Proteus)で「2倍の細かさ・1秒60コマ」にする
+(2026-10-29 は 176 クレジット)。できた動画(3504×2360、約600MB)は大きすぎるので、アプリ用に
+1.5倍(2628×1770)の HEVC に書き出し直して `ios/HokusaiLoop/hokusai-loop.mp4` にする:
+```
+ffmpeg -i 画質を上げた動画.mp4 -vf scale=2628:1770:flags=lanczos -c:v libx265 -crf 20 \
+  -tag:v hvc1 -an -movflags +faststart ios/HokusaiLoop/hokusai-loop.mp4
+```
+1秒60コマにすると長さが少し変わる(34.33秒 → 34.30秒)ので、音楽(`tools/make_music.py` の
+`FPS` と `LOOP_FRAMES`)を動画のコマ数に合わせて作り直す。
+
 ### 5. iPhone に入れる(Mac で)
 1. `ios/HokusaiLoop.xcodeproj` を Xcode(16 以降)で開く
 2. 左の HokusaiLoop → Signing & Capabilities → Team に自分の Apple アカウントを選ぶ
