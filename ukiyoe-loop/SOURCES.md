@@ -11,6 +11,11 @@ Open Access について:https://www.metmuseum.org/policies/image-resources
 | 6 | 駿州江尻 Ejiri in Suruga Province | 葛飾北斎 | https://images.metmuseum.org/CRDImages/as/original/DP140977.jpg | 同じ版画の別の2枚(作品 55735 / JP2953、作品 56988 / JP2553)はパブリックドメイン ✓。DP140977 の作品番号は未照合 |
 | 4 | 三代目大谷鬼次の江戸兵衛 Kabuki Actor Ōtani Oniji III as Yakko Edobei | 東洲斎写楽 | https://images.metmuseum.org/CRDImages/as/original/DP130228.jpg | 作品 37358 / JP2822、パブリックドメイン ✓ |
 | 7 | 木曽海道六拾九次之内 洗馬 | 歌川広重 | https://images.metmuseum.org/CRDImages/as/original/DP120447.jpg | 作品番号は未照合(ukiyo-e.org の Met 収蔵品の索引で「Senba Station」として見つけた) |
+| 8 | 東海道五拾三次之内 蒲原 夜之雪 | 歌川広重 | https://images.metmuseum.org/CRDImages/as/original/DP122189.jpg | Met 36937(パブリックドメイン)。夜空が黒い刷りを選んだ |
+| 9 | 東海道五拾三次之内 日本橋 朝之景 | 歌川広重 | https://images.metmuseum.org/CRDImages/as/original/DP122174.jpg | Met 36922(パブリックドメイン) |
+| 10 | 名所江戸百景 大はしあたけの夕立 | 歌川広重 | https://images.metmuseum.org/CRDImages/as/original/DP123602.jpg | Met 37386(パブリックドメイン)。縦長なので左右を地の色で埋めた |
+| 11 | 東海道五拾三次之内 庄野 白雨 | 歌川広重 | https://images.metmuseum.org/CRDImages/as/original/DP122226.jpg | Met 36967(パブリックドメイン) |
+| 12 | 富嶽三十六景 山下白雨 | 葛飾北斎 | https://images.metmuseum.org/CRDImages/as/original/DP141040.jpg | Met 57006(パブリックドメイン) |
 
 - 取得日:2026-10-28。どれも絵柄が合っていることを目で確かめた。
 - 「目録での確認」は Met の公式データ(collectionapi.metmuseum.org)で isPublicDomain を確かめたもの。
