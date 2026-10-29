@@ -38,7 +38,8 @@ SEGMENTS = ROOT / "segments"
 # 区間の着地点になる絵(images/ になければ、仮の素材から作った work/images/ を使う)
 FIRST = "1-great-wave.jpg"
 TAILS = ["2-red-fuji.jpg", "3-phoenix.jpg", "4-sharaku.jpg", "5-hokusai-portrait.jpg", "6-ejiri.jpg",
-         "7-seba.jpg", "1-great-wave.jpg"]
+         "7-seba.jpg", "8-kanbara.jpg", "9-nihonbashi.jpg", "10-ohashi.jpg", "11-shono.jpg",
+         "12-sanka-hakuu.jpg", "1-great-wave.jpg"]
 
 
 def image_path(name):
