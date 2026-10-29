@@ -12,3 +12,5 @@ DerivedData/
 segments/*.mp4
 segments/*.png
 segments/*.jpg
+# つないだ完成の動画も、仮の素材をもとにした部分を含むので公開の場所には置かない
+ios/HokusaiLoop/hokusai-loop.mp4
