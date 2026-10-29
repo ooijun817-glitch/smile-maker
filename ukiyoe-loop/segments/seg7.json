@@ -1,0 +1,18 @@
+{
+  "segment": "seg7",
+  "service": "Figma Weave",
+  "model": "Kling 3 3.0 Pro",
+  "run_id": "a8077c11-89f5-4713-82a3-af5c92c40034",
+  "duration": "5",
+  "first": "seg6_last.png",
+  "tail": "8-kanbara.jpg",
+  "prompt": "Night deepens over the quiet river under the full moon. Snow begins to fall, softly at first, then thickly. The willows and reeds turn white; the river bank rises and becomes a deep snow-covered slope, and the huts by the water become a row of snow-laden village houses on the hillside. The boatman pulls up his straw cape and becomes one of a few travelers trudging up the snowy slope under umbrellas. The moon disappears behind snow clouds and the sky darkens to deep grey-black. The camera slowly rises. Silent, still and beautiful. Ukiyo-e landscape print style by Hiroshige. One continuous transformation, not a fade or dissolve. Motion design for a large digital signage screen in a modern train station concourse: dynamic cinematic camera moves, layered parallax depth, crisp confident timing, and a refined, elegant Japanese atmosphere. Everything moves as if truly alive. Keep the flat ukiyo-e look: crisp ink outlines, flat colors, washi paper texture, no realistic shading.",
+  "negative_prompt": "smiling, grin, laughing, cartoon, anime, photorealistic, 3D render, CGI, realistic lighting, lens flare, text, subtitles, logo, watermark, extra people, deformed face, deformed hands, extra fingers, blurry, low quality, flicker, crossfade, dissolve, double exposure, ghosting, shadow figure",
+  "video": {
+    "width": 1752,
+    "height": 1180,
+    "fps": 24.0,
+    "frames": 121
+  },
+  "made_at": "2026-10-29 20:20:05"
+}

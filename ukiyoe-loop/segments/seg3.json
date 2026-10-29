@@ -1,0 +1,18 @@
+{
+  "segment": "seg3",
+  "service": "Figma Weave",
+  "model": "Kling 3 3.0 Pro",
+  "run_id": "f4d8e62d-5e8c-453a-9aea-fdd1b0ad63e7",
+  "duration": "5",
+  "first": "seg2_last.png",
+  "tail": "4-sharaku.jpg",
+  "prompt": "The phoenix's piercing eye glares straight at the viewer and the camera rushes in until the phoenix's head and eye fill most of the screen. The eye stays clearly drawn with crisp ukiyo-e ink lines, never blurry or abstract. The bird's eye reshapes into the fierce eye of a kabuki actor: a narrow eye rimmed with red makeup, the dark pupil pulled toward the inner corner, under a bold black eyebrow. The camera pulls back to reveal the villain Edobei against a dark grey mica background, his mouth tightly clenched. He snaps into a dramatic mie pose, thrusting both hands forward with fingers spread wide, his striped robe swinging. The phoenix's colored feathers fold into the stripes of his robe. Theatrical and intense. Ukiyo-e actor print style by Sharaku. One continuous transformation, not a fade or dissolve. Motion design for a large digital signage screen in a modern train station concourse: dynamic cinematic camera moves, layered parallax depth, crisp confident timing, and a refined, elegant Japanese atmosphere. Everything moves as if truly alive. Keep the flat ukiyo-e look: crisp ink outlines, flat colors, washi paper texture, no realistic shading.",
+  "negative_prompt": "smiling, grin, laughing, cartoon, anime, photorealistic, 3D render, CGI, realistic lighting, lens flare, text, subtitles, logo, watermark, extra people, deformed face, deformed hands, extra fingers, blurry, low quality, flicker, crossfade, dissolve, double exposure, ghosting, shadow figure, X mark, cross mark, crossed lines over the eye, scratches, abstract shapes",
+  "video": {
+    "width": 1752,
+    "height": 1180,
+    "fps": 24.0,
+    "frames": 121
+  },
+  "made_at": "2026-10-29 19:21:03"
+}

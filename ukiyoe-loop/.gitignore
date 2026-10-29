@@ -1,0 +1,16 @@
+# Kling の鍵。絶対に保存しない
+.env
+# 作業中のファイル(ダウンロードした元画像、途中のコマなど)
+work/
+# Xcode が作るもの
+ios/**/xcuserdata/
+ios/**/*.xcworkspace/xcuserdata/
+DerivedData/
+.DS_Store
+# 区間の動画とコマの画像(仮の素材をもとにした部分を含むので、公開の場所には置かない)。
+# 作ったときの記録(segN.json)だけを保存する。
+segments/*.mp4
+segments/*.png
+segments/*.jpg
+# つないだ完成の動画も、仮の素材をもとにした部分を含むので公開の場所には置かない
+ios/HokusaiLoop/hokusai-loop.mp4

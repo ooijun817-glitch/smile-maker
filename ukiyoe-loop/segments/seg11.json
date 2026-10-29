@@ -1,0 +1,18 @@
+{
+  "segment": "seg11",
+  "service": "Figma Weave",
+  "model": "Kling 3 3.0 Pro",
+  "run_id": "c0036fe6-8bba-480f-b423-6c345d99ad5d",
+  "duration": "5",
+  "first": "seg10_last.png",
+  "tail": "12-sanka-hakuu.jpg",
+  "prompt": "The driving rain passes; the camera pulls back and climbs high above the hills. The bamboo grove and the slope become the dark forested foothills of a huge mountain, and the grey sky clears to deep blue at the top with white clouds. The mountain rises into the tall dark red-brown peak of Mount Fuji with snow streaks near the summit, while a red zigzag of lightning flashes across its dark lower slopes. Ukiyo-e print style by Hokusai, Thirty-six Views of Mount Fuji. One continuous transformation, not a fade or dissolve. Motion design for a large digital signage screen in a modern train station concourse: dynamic cinematic camera moves, layered parallax depth, crisp confident timing, and a refined, elegant Japanese atmosphere. Everything moves as if truly alive. Keep the flat ukiyo-e look: crisp ink outlines, flat colors, washi paper texture, no realistic shading.",
+  "negative_prompt": "smiling, grin, laughing, cartoon, anime, photorealistic, 3D render, CGI, realistic lighting, lens flare, text, subtitles, logo, watermark, extra people, deformed face, deformed hands, extra fingers, blurry, low quality, flicker, crossfade, dissolve, double exposure, ghosting, shadow figure",
+  "video": {
+    "width": 1752,
+    "height": 1180,
+    "fps": 24.0,
+    "frames": 121
+  },
+  "made_at": "2026-10-29 21:49:44"
+}
