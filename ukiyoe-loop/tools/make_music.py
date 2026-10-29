@@ -311,7 +311,7 @@ for i, tm in enumerate(c[2] + 0.2 + np.cumsum(np.geomspace(0.3, 0.07, 24))):
 place(odaiko(1.0), c[2] + 3.0); place(odaiko(1.0), c[2] + 3.25)
 place(hyoshigi(1.0), c[2] + 3.55, 0.3); place(hyoshigi(0.9), c[2] + 3.8, 0.3)  # 拍子木「チョン、チョン」
 # 区間4 写楽→北斎:静まるが、大太鼓の鼓動は残す
-groove(c[3], c[4], "O...K...o.K.K...", 0.7)
+groove(c[3], c[4], "O.xKK.x.o.xKK.xK", 0.85)
 sham_run(c[3] + 0.3, c[3] + 1.6, [12, 10, 8, 7, 5], 0.5)
 # 区間5 北斎→江尻:風。締太鼓の速い刻みと、三味線の速い駆け回り
 groove(c[4], c[5], "O.KxK.xKo.oKKxKx", 0.85)
@@ -319,7 +319,7 @@ for start in (0.3, 1.6, 2.9):
     k = int(rng.integers(8, 12))
     sham_run(c[4] + start, c[4] + start + 0.95, [k, k + 2, k + 1, k + 3, k + 2, k + 4, k + 3, k + 1], 0.55)
 # 区間6 江尻→洗馬:日暮れ。ゆったりした大太鼓と、三味線の静かな節
-groove(c[5], c[6], "O...K...o.K.K.K.", 0.6)
+groove(c[5], c[6], "O.xKK.xKo.xKK.xK", 0.8)
 for tm, d, sl in ((0.9, 7, 0.0), (1.8, 8, 1.0), (3.2, 10, 0.0), (3.7, 8, -1.0)):
     sham(c[5] + tm, d, 0.45, slide=sl, dur=1.6)
 # 区間7 洗馬→大波:だんだん速く強く、大波へ流れ込む
@@ -336,6 +336,11 @@ voice("nipponichi", c[2] + 4.05, 0.9, 0.25)  # 写楽の見得のあとに、大
 voice("sore", c[4] + 0.2, 0.9, -0.1)         # 江尻の風が起こる
 voice("ha2", c[6] + 2.0, 0.9, 0.1)           # 大波へ向けて盛り上がる途中
 voice("yoo", T - 1.45, 1.0, 0.0)             # 一周の終わりに「よーっ!」、そのまま最初の大波へ
+
+# ---- 静かだった場面も盛り上げる ----
+sham_run(c[3] + 1.7, c[4], [7, 8, 10, 8, 7, 5, 7, 8, 10, 12, 10, 8, 10, 12, 13, 12], 0.55)
+sham_run(c[5] + 0.3, c[6] - 0.1, [5, 7, 8, 7, 5, 7, 8, 10, 8, 7, 8, 10, 12, 10, 8, 10, 12, 13, 12, 10], 0.5)
+groove(c[6], T, "O.xKO.xKO.xKOxKx", 0.9, beats=9)
 
 # ---- 山場を大きく:「カカカッ」の連打のあとに大太鼓の連打 ----
 def climax(at, ka_n=4, don_n=3, gap=0.15):
@@ -365,7 +370,7 @@ lift = np.zeros(L)
 for at, width in peaks:
     dt = (t_all - at + T / 2) % T - T / 2              # 1周の輪の上での距離
     lift = np.maximum(lift, np.exp(-(dt / width) ** 2))
-buf *= 0.55 + 0.45 * lift
+buf *= 0.78 + 0.22 * lift
 
 # 低い持続音:レとラ。1周でちょうど整数回振動する高さにして、つなぎ目で位相がずれないようにする
 t = np.arange(L) / SR
@@ -387,7 +392,7 @@ mix = 0.9 * buf + 0.25 * wet
 
 # 音圧を上げる:いったんそろえてから、やわらかく頭を丸める(割れないように)
 mix /= np.max(np.abs(mix))
-mix = np.tanh(1.8 * mix) / np.tanh(1.8)
+mix = np.tanh(2.3 * mix) / np.tanh(2.3)
 mix *= 0.9
 pcm = (mix.T * 32767).astype(np.int16)
 OUT.parent.mkdir(parents=True, exist_ok=True)
