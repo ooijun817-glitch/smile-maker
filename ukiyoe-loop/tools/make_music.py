@@ -294,12 +294,12 @@ for i, tm in enumerate(trem):
 
 # ---- 太鼓のリズムと三味線の刻み(全体をダイナミックに) ----
 # 区間1 大波:冒頭から力強く。砕けるところで大太鼓の連打
-groove(c[0], c[1], "O..oO.K.O.oxK.xx", 1.0)
+groove(c[0], c[1], "O.KoO.K.O.oKK.xK", 1.0)
 for tm in (1.9, 2.05, 2.2):
     place(odaiko(1.0), c[0] + tm)
 sham_run(c[0] + 2.4, c[1], [10, 8, 10, 7, 10, 8, 12, 10, 8, 7, 8, 10, 12, 13, 12, 10, 8, 7, 5, 7], 0.6)
 # 区間2 赤富士→鳳凰:刻みを重ね、鳳凰が現れるところで大きく
-groove(c[1], c[2], "O.x.K.x.o.oxK.xx", 0.9)
+groove(c[1], c[2], "O.xKK.x.o.oKK.xK", 0.9)
 sham_run(c[1] + 0.2, c[1] + 1.55, [5, 7, 5, 8, 7, 5, 7, 8], 0.55)
 for tm in (2.6, 2.75):
     place(odaiko(1.0), c[1] + tm)
@@ -311,15 +311,15 @@ for i, tm in enumerate(c[2] + 0.2 + np.cumsum(np.geomspace(0.3, 0.07, 24))):
 place(odaiko(1.0), c[2] + 3.0); place(odaiko(1.0), c[2] + 3.25)
 place(hyoshigi(1.0), c[2] + 3.55, 0.3); place(hyoshigi(0.9), c[2] + 3.8, 0.3)  # 拍子木「チョン、チョン」
 # 区間4 写楽→北斎:静まるが、大太鼓の鼓動は残す
-groove(c[3], c[4], "O.......o...K...", 0.7)
+groove(c[3], c[4], "O...K...o.K.K...", 0.7)
 sham_run(c[3] + 0.3, c[3] + 1.6, [12, 10, 8, 7, 5], 0.5)
 # 区間5 北斎→江尻:風。締太鼓の速い刻みと、三味線の速い駆け回り
-groove(c[4], c[5], "O.xxK.xxo.oxKxxx", 0.85)
+groove(c[4], c[5], "O.KxK.xKo.oKKxKx", 0.85)
 for start in (0.3, 1.6, 2.9):
     k = int(rng.integers(8, 12))
     sham_run(c[4] + start, c[4] + start + 0.95, [k, k + 2, k + 1, k + 3, k + 2, k + 4, k + 3, k + 1], 0.55)
 # 区間6 江尻→洗馬:日暮れ。ゆったりした大太鼓と、三味線の静かな節
-groove(c[5], c[6], "O.......K...o.K.", 0.6)
+groove(c[5], c[6], "O...K...o.K.K.K.", 0.6)
 for tm, d, sl in ((0.9, 7, 0.0), (1.8, 8, 1.0), (3.2, 10, 0.0), (3.7, 8, -1.0)):
     sham(c[5] + tm, d, 0.45, slide=sl, dur=1.6)
 # 区間7 洗馬→大波:だんだん速く強く、大波へ流れ込む
@@ -336,6 +336,36 @@ voice("nipponichi", c[2] + 4.05, 0.9, 0.25)  # 写楽の見得のあとに、大
 voice("sore", c[4] + 0.2, 0.9, -0.1)         # 江尻の風が起こる
 voice("ha2", c[6] + 2.0, 0.9, 0.1)           # 大波へ向けて盛り上がる途中
 voice("yoo", T - 1.45, 1.0, 0.0)             # 一周の終わりに「よーっ!」、そのまま最初の大波へ
+
+# ---- 山場を大きく:「カカカッ」の連打のあとに大太鼓の連打 ----
+def climax(at, ka_n=4, don_n=3, gap=0.15):
+    for i in range(ka_n):                               # 山場の直前の「カカカッ」
+        place(ka(0.8 + 0.1 * i), at - (ka_n - i) * 0.07, -0.15)
+    for i in range(don_n):                              # 大太鼓の連打
+        place(odaiko(1.0), at + i * gap, -0.05 + 0.1 * (i % 2))
+
+
+climax(c[0] + 1.8, 4, 4)          # 大波が砕ける
+climax(c[1] + 2.6, 5, 3)          # 鳳凰が現れる
+climax(c[2] + 3.0, 6, 2, 0.25)    # 写楽の見得
+climax(c[4] + 0.2, 3, 2)          # 江尻の風が起こる
+# 最後の盛り上がり:締太鼓の刻みに「カッ」を重ね、最後の1秒は大太鼓の連打で最初の大波へ
+for i, tm in enumerate(np.arange(T - 2.0, T - 0.05, 0.14)):
+    if i % 2:
+        place(ka(0.5 + 0.03 * i), tm, -0.15)
+for i, tm in enumerate(T - 1.0 + np.cumsum(np.geomspace(0.2, 0.07, 9)) - 0.2):
+    if tm < T - 0.03:
+        place(odaiko(0.6 + 0.05 * i), tm, -0.05 + 0.1 * (i % 2))
+
+# ---- 抑揚:山場以外を少し抑え、山場を大きく ----
+# 1周を「輪」として扱い、終わりの盛り上がりがそのまま始まりの大波へ続くようにする
+t_all = np.arange(L) / SR
+peaks = [(c[0] + 1.9, 1.6), (c[1] + 2.7, 1.1), (c[2] + 3.2, 0.9), (c[4] + 0.4, 0.8), (T - 0.2, 2.2)]
+lift = np.zeros(L)
+for at, width in peaks:
+    dt = (t_all - at + T / 2) % T - T / 2              # 1周の輪の上での距離
+    lift = np.maximum(lift, np.exp(-(dt / width) ** 2))
+buf *= 0.55 + 0.45 * lift
 
 # 低い持続音:レとラ。1周でちょうど整数回振動する高さにして、つなぎ目で位相がずれないようにする
 t = np.arange(L) / SR
