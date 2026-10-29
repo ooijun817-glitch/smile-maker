@@ -8,7 +8,9 @@
 - 三味線の音は、バチで弾く鋭い出だし、「さわり」のビーンという響き、胴の皮を打つ音で作る。
   動きの大きい場面のリズムを三味線、静かな場面を箏が受け持つ
 - 音階は箏でよく使う都節音階(レ・ミ♭・ソ・ラ・シ♭)
-- 低い持続音と、場面の切り替わりの小さな太鼓を添える
+- 太鼓は2種類:低く大きく響く大太鼓と、高く締まった音の締太鼓。場面ごとに約130拍/分で刻む。
+  写楽の見得では歌舞伎の拍子木を鳴らす
+- 低い持続音を薄く敷く
 - 長さは動画の1周ちょうど。終わりにはみ出した余韻は始まりへ回し込み、残響も「輪」として
   かけるので、くり返し再生しても切れ目が出ない
 - 録音や既存の曲は使っていない(すべてこのプログラムで作った音)
@@ -71,7 +73,7 @@ def koto(freq, vel=1.0, dur=3.2, bend=0.0):
         y += amp * np.sin(k * inharm * phase) * np.exp(-decay * t)
     attack = rng.standard_normal(len(t)) * np.exp(-t * 90) * 0.15  # 爪が弦に当たる音
     y = (y + attack) * np.minimum(1, t * 400)
-    return 0.22 * vel * y
+    return 0.17 * vel * y
 
 
 def taiko(vel=1.0, dur=0.9):
@@ -104,17 +106,63 @@ def shamisen(freq, vel=1.0, dur=1.3, slide=0.0):
     body = np.sin(2 * np.pi * 190 * t) * np.exp(-t * 45)
     y = y * 0.5 + 0.35 * hit + 0.5 * body
     y *= np.minimum(1, t * 900)
-    return 0.16 * vel * y
+    return 0.27 * vel * y
 
 
 def sham(time, degree, vel=0.8, slide=0.0, dur=1.3):
     jitter = rng.normal(0, 0.005)
-    place(shamisen(pitch(degree), vel, dur, slide), time + jitter, 0.35)  # 三味線は少し右に
+    place(shamisen(pitch(degree), vel, dur, slide), time + jitter, 0.1)  # 三味線は前に、ほぼ中央
 
 
 def sham_run(start, end, degrees, vel=0.7):
     for tm, d in zip(np.linspace(start, end, len(degrees), endpoint=False), degrees):
         sham(tm, d, vel)
+
+
+def odaiko(vel=1.0, dur=1.6):
+    """大太鼓:低く大きく、腹に響く音。"""
+    t = np.arange(int(dur * SR)) / SR
+    f_t = 40 + 38 * np.exp(-t * 14)
+    y = np.sin(2 * np.pi * np.cumsum(f_t) / SR) * np.exp(-t * 3.2)
+    y += 0.5 * np.sin(2 * np.pi * np.cumsum(f_t * 1.6) / SR) * np.exp(-t * 7)  # 胴の鳴り
+    y += rng.standard_normal(len(t)) * np.exp(-t * 70) * 0.35                # 撥が皮を打つ音
+    return 0.95 * vel * np.tanh(1.4 * y)
+
+
+def shime(vel=1.0, dur=0.25):
+    """締太鼓:高く締まった、歯切れのよい音。速い刻みに使う。"""
+    t = np.arange(int(dur * SR)) / SR
+    f_t = 260 + 120 * np.exp(-t * 60)
+    y = np.sin(2 * np.pi * np.cumsum(f_t) / SR) * np.exp(-t * 26)
+    n = rng.standard_normal(len(t))
+    y += (n - np.convolve(n, np.ones(6) / 6, mode="same")) * np.exp(-t * 90) * 0.6
+    return 0.42 * vel * y
+
+
+def hyoshigi(vel=1.0, dur=0.3):
+    """拍子木:歌舞伎で見得を切るときの「チョン」。"""
+    t = np.arange(int(dur * SR)) / SR
+    y = (np.sin(2 * np.pi * 2350 * t) + 0.6 * np.sin(2 * np.pi * 3720 * t)) * np.exp(-t * 55)
+    y += rng.standard_normal(len(t)) * np.exp(-t * 300) * 0.4
+    return 0.5 * vel * y
+
+
+def groove(start, end, pattern, vel=1.0, beats=11):
+    """start〜end を beats 拍に分け、16分音符ごとに pattern の文字で太鼓を打つ。
+    O=大太鼓(強) o=大太鼓(弱) X=締太鼓(強) x=締太鼓(弱) .=休み。pattern はくり返して使う。"""
+    step = (end - start) / beats / 4
+    n = int(round((end - start) / step))
+    for i in range(n):
+        ch = pattern[i % len(pattern)]
+        tm = start + i * step
+        if ch == "O":
+            place(odaiko(1.0 * vel), tm, -0.05)
+        elif ch == "o":
+            place(odaiko(0.6 * vel), tm, -0.05)
+        elif ch == "X":
+            place(shime(1.0 * vel), tm, 0.25)
+        elif ch == "x":
+            place(shime(0.55 * vel), tm, 0.25)
 
 
 def note(time, degree, vel=0.8, bend=0.0, dur=3.2):
@@ -198,10 +246,47 @@ for i, tm in enumerate(trem):
     sham(tm, [5, 5, 7, 5, 8, 7][i % 6] + (5 if i > len(trem) * 0.6 else 0),
          0.3 + 0.6 * i / len(trem), dur=0.7)
 
+# ---- 太鼓のリズムと三味線の刻み(全体をダイナミックに) ----
+# 区間1 大波:冒頭から力強く。砕けるところで大太鼓の連打
+groove(c[0], c[1], "O..xX.xxo.X.Xxxx", 1.0)
+for tm in (1.9, 2.05, 2.2):
+    place(odaiko(1.0), c[0] + tm)
+sham_run(c[0] + 2.4, c[1], [10, 8, 10, 7, 10, 8, 12, 10, 8, 7, 8, 10, 12, 13, 12, 10, 8, 7, 5, 7], 0.6)
+# 区間2 赤富士→鳳凰:刻みを重ね、鳳凰が現れるところで大きく
+groove(c[1], c[2], "o.x.X.x.o.x.Xxxx", 0.9)
+sham_run(c[1] + 0.2, c[1] + 1.55, [5, 7, 5, 8, 7, 5, 7, 8], 0.55)
+for tm in (2.6, 2.75):
+    place(odaiko(1.0), c[1] + tm)
+sham_run(c[1] + 3.0, c[2], [15, 13, 15, 12, 13, 10, 12, 10, 8, 10], 0.6)
+# 区間3 鳳凰→写楽:締太鼓がだんだん速くなり、見得で大太鼓と拍子木
+for i, tm in enumerate(c[2] + 0.2 + np.cumsum(np.geomspace(0.3, 0.07, 24))):
+    if tm < c[2] + 2.95:
+        place(shime(0.4 + 0.025 * i), tm, 0.25)
+place(odaiko(1.0), c[2] + 3.0); place(odaiko(1.0), c[2] + 3.25)
+place(hyoshigi(1.0), c[2] + 3.55, 0.3); place(hyoshigi(0.9), c[2] + 3.8, 0.3)  # 拍子木「チョン、チョン」
+# 区間4 写楽→北斎:静まるが、大太鼓の鼓動は残す
+groove(c[3], c[4], "o.......o.......", 0.7)
+sham_run(c[3] + 0.3, c[3] + 1.6, [12, 10, 8, 7, 5], 0.5)
+# 区間5 北斎→江尻:風。締太鼓の速い刻みと、三味線の速い駆け回り
+groove(c[4], c[5], "o.xxX.xxo.xxXxxx", 0.85)
+for start in (0.3, 1.6, 2.9):
+    k = int(rng.integers(8, 12))
+    sham_run(c[4] + start, c[4] + start + 0.95, [k, k + 2, k + 1, k + 3, k + 2, k + 4, k + 3, k + 1], 0.55)
+# 区間6 江尻→洗馬:日暮れ。ゆったりした大太鼓と、三味線の静かな節
+groove(c[5], c[6], "o...x...o...x.x.", 0.6)
+for tm, d, sl in ((0.9, 7, 0.0), (1.8, 8, 1.0), (3.2, 10, 0.0), (3.7, 8, -1.0)):
+    sham(c[5] + tm, d, 0.45, slide=sl, dur=1.6)
+# 区間7 洗馬→大波:だんだん速く強く、大波へ流れ込む
+for i, tm in enumerate(c[6] + 0.1 + np.cumsum(np.geomspace(0.45, 0.06, 30))):
+    if tm < T - 0.05:
+        place(shime(0.35 + 0.02 * i), tm, 0.25)
+for tm in (c[6] + 1.0, c[6] + 2.0, c[6] + 2.6, c[6] + 3.1, c[6] + 3.5, T - 0.25):
+    place(odaiko(0.8), tm)
+
 # 低い持続音:レとラ。1周でちょうど整数回振動する高さにして、つなぎ目で位相がずれないようにする
 t = np.arange(L) / SR
 drone = np.zeros(L)
-for f, a in ((73.42, 0.05), (110.0, 0.03), (146.83, 0.015)):
+for f, a in ((73.42, 0.03), (110.0, 0.018), (146.83, 0.01)):
     f_loop = round(f * T) / T
     drone += a * np.sin(2 * np.pi * f_loop * t)
 breath = 0.65 + 0.35 * np.sin(2 * np.pi * 2 * t / T - np.pi / 2)  # 1周で2回ゆっくり息をする
@@ -214,9 +299,12 @@ ir = np.convolve(ir, np.ones(8) / 8, mode="same")     # 響きを少し柔らか
 ir /= np.sqrt(np.sum(ir ** 2))
 IR = np.fft.rfft(np.pad(ir, (0, L - len(ir))))
 wet = np.stack([np.fft.irfft(np.fft.rfft(ch) * IR, n=L) for ch in buf])
-mix = 0.8 * buf + 0.28 * wet
+mix = 0.9 * buf + 0.18 * wet
 
-mix /= np.max(np.abs(mix)) / 0.85                      # 大きすぎないようにそろえる
+# 音圧を上げる:いったんそろえてから、やわらかく頭を丸める(割れないように)
+mix /= np.max(np.abs(mix))
+mix = np.tanh(2.2 * mix) / np.tanh(2.2)
+mix *= 0.9
 pcm = (mix.T * 32767).astype(np.int16)
 OUT.parent.mkdir(parents=True, exist_ok=True)
 with wave.open(str(OUT), "wb") as w:
