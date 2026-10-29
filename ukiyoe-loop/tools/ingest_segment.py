@@ -30,6 +30,7 @@ def main():
     ap.add_argument("segment", choices=sorted(ms.PLAN))
     ap.add_argument("source", help="動画の URL、または手元の mp4 ファイル")
     ap.add_argument("--model", default="", help="Weave で使った Kling のモデル名")
+    ap.add_argument("--family", default="Kling First & Last Frame", help="Weave のモデルの種類(例: Kling 3)")
     ap.add_argument("--run-id", default="", help="Weave の実行番号")
     ap.add_argument("--duration", default="5")
     args = ap.parse_args()
@@ -49,7 +50,7 @@ def main():
     p = prompts.get(seg) or {}
     plan = ms.PLAN[seg]
     record = {
-        "segment": seg, "service": "Figma Weave", "model": f"Kling First & Last Frame {args.model}".strip(),
+        "segment": seg, "service": "Figma Weave", "model": f"{args.family} {args.model}".strip(),
         "run_id": args.run_id, "duration": args.duration,
         "first": plan["first"].name, "tail": plan["tail"].name if plan["tail"] else None,
         "prompt": p.get("prompt", ""), "negative_prompt": p.get("negative_prompt", ""),
