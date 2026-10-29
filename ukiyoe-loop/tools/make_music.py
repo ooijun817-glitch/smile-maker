@@ -123,24 +123,53 @@ def sham_run(start, end, degrees, vel=0.7):
         sham(tm, d, vel)
 
 
-def odaiko(vel=1.0, dur=1.6):
-    """大太鼓:低く大きく、腹に響く音。"""
-    t = np.arange(int(dur * SR)) / SR
-    f_t = 40 + 38 * np.exp(-t * 14)
-    y = np.sin(2 * np.pi * np.cumsum(f_t) / SR) * np.exp(-t * 3.2)
-    y += 0.5 * np.sin(2 * np.pi * np.cumsum(f_t * 1.6) / SR) * np.exp(-t * 7)  # 胴の鳴り
-    y += rng.standard_normal(len(t)) * np.exp(-t * 70) * 0.35                # 撥が皮を打つ音
-    return 0.95 * vel * np.tanh(1.4 * y)
+# 円い皮が振動するときの響きの比(低い音を 1 とする)。和太鼓らしい、音程のずれた重なりになる
+MEMBRANE = [(1.00, 1.0, 1.0), (1.59, 0.55, 1.6), (2.14, 0.35, 2.3), (2.30, 0.30, 2.6),
+            (2.65, 0.22, 3.2), (2.92, 0.16, 3.8), (3.16, 0.12, 4.5), (3.50, 0.08, 5.5)]
 
 
-def shime(vel=1.0, dur=0.25):
-    """締太鼓:高く締まった、歯切れのよい音。速い刻みに使う。"""
+def drumhead(f0, dur, decay, drop=0.06):
+    """皮の響き。f0 は一番低い音、decay は低い音の消える速さ(小さいほど長く響く)。
+    打った直後は皮が強く張るので、音がわずかに高く、すぐ落ち着く。"""
     t = np.arange(int(dur * SR)) / SR
-    f_t = 260 + 120 * np.exp(-t * 60)
-    y = np.sin(2 * np.pi * np.cumsum(f_t) / SR) * np.exp(-t * 26)
+    bend = 1 + drop * np.exp(-t * 12)
+    y = np.zeros_like(t)
+    for ratio, amp, dk in MEMBRANE:
+        phase = 2 * np.pi * np.cumsum(f0 * ratio * bend) / SR + rng.uniform(0, 2 * np.pi)
+        y += amp * np.sin(phase) * np.exp(-decay * dk * t)
+    return t, y
+
+
+def odaiko(vel=1.0, dur=3.2):
+    """長胴太鼓(大太鼓)の「ドーン」。低く、長く響く。"""
+    t, y = drumhead(78, dur, 1.15)
+    y += 0.8 * np.sin(2 * np.pi * 52 * t) * np.exp(-t * 2.2) * np.minimum(1, t * 200)  # 腹に響く低い鳴り
+    # 胴の木の鳴りと、撥が皮に当たる音(高すぎない、こもった音)
     n = rng.standard_normal(len(t))
-    y += (n - np.convolve(n, np.ones(6) / 6, mode="same")) * np.exp(-t * 90) * 0.6
-    return 0.42 * vel * y
+    soft = np.convolve(n, np.ones(40) / 40, mode="same")
+    y += soft * np.exp(-t * 18) * 3.0
+    y += np.convolve(n, np.ones(6) / 6, mode="same") * np.exp(-t * 90) * 0.5
+    y *= np.minimum(1, t * 600)
+    return 0.6 * vel * y
+
+
+def ka(vel=1.0, dur=0.25):
+    """縁打ち「カッ」。撥で太鼓の木の縁を打つ乾いた音。"""
+    t = np.arange(int(dur * SR)) / SR
+    y = (np.sin(2 * np.pi * 1180 * t) + 0.7 * np.sin(2 * np.pi * 1870 * t)
+         + 0.4 * np.sin(2 * np.pi * 2650 * t)) * np.exp(-t * 70)
+    n = rng.standard_normal(len(t))
+    y += (n - np.convolve(n, np.ones(4) / 4, mode="same")) * np.exp(-t * 400) * 0.3
+    return 0.32 * vel * y
+
+
+def shime(vel=1.0, dur=0.6):
+    """締太鼓の「テン」。強く張った皮の、高く張りのある音。"""
+    t, y = drumhead(420, dur, 9.0, drop=0.03)
+    n = rng.standard_normal(len(t))
+    y += np.convolve(n, np.ones(8) / 8, mode="same") * np.exp(-t * 160) * 0.6  # 撥の当たり
+    y *= np.minimum(1, t * 900)
+    return 0.3 * vel * y
 
 
 def hyoshigi(vel=1.0, dur=0.3):
@@ -153,7 +182,8 @@ def hyoshigi(vel=1.0, dur=0.3):
 
 def groove(start, end, pattern, vel=1.0, beats=11):
     """start〜end を beats 拍に分け、16分音符ごとに pattern の文字で太鼓を打つ。
-    O=大太鼓(強) o=大太鼓(弱) X=締太鼓(強) x=締太鼓(弱) .=休み。pattern はくり返して使う。"""
+    O=大太鼓(強) o=大太鼓(弱) K=縁打ち「カッ」 X=締太鼓(強) x=締太鼓(弱) .=休み。
+    pattern はくり返して使う。"""
     step = (end - start) / beats / 4
     n = int(round((end - start) / step))
     for i in range(n):
@@ -163,6 +193,8 @@ def groove(start, end, pattern, vel=1.0, beats=11):
             place(odaiko(1.0 * vel), tm, -0.05)
         elif ch == "o":
             place(odaiko(0.6 * vel), tm, -0.05)
+        elif ch == "K":
+            place(ka(0.9 * vel), tm, -0.15)
         elif ch == "X":
             place(shime(1.0 * vel), tm, 0.25)
         elif ch == "x":
@@ -262,12 +294,12 @@ for i, tm in enumerate(trem):
 
 # ---- 太鼓のリズムと三味線の刻み(全体をダイナミックに) ----
 # 区間1 大波:冒頭から力強く。砕けるところで大太鼓の連打
-groove(c[0], c[1], "O..xX.xxo.X.Xxxx", 1.0)
+groove(c[0], c[1], "O..oO.K.O.oxK.xx", 1.0)
 for tm in (1.9, 2.05, 2.2):
     place(odaiko(1.0), c[0] + tm)
 sham_run(c[0] + 2.4, c[1], [10, 8, 10, 7, 10, 8, 12, 10, 8, 7, 8, 10, 12, 13, 12, 10, 8, 7, 5, 7], 0.6)
 # 区間2 赤富士→鳳凰:刻みを重ね、鳳凰が現れるところで大きく
-groove(c[1], c[2], "o.x.X.x.o.x.Xxxx", 0.9)
+groove(c[1], c[2], "O.x.K.x.o.oxK.xx", 0.9)
 sham_run(c[1] + 0.2, c[1] + 1.55, [5, 7, 5, 8, 7, 5, 7, 8], 0.55)
 for tm in (2.6, 2.75):
     place(odaiko(1.0), c[1] + tm)
@@ -279,15 +311,15 @@ for i, tm in enumerate(c[2] + 0.2 + np.cumsum(np.geomspace(0.3, 0.07, 24))):
 place(odaiko(1.0), c[2] + 3.0); place(odaiko(1.0), c[2] + 3.25)
 place(hyoshigi(1.0), c[2] + 3.55, 0.3); place(hyoshigi(0.9), c[2] + 3.8, 0.3)  # 拍子木「チョン、チョン」
 # 区間4 写楽→北斎:静まるが、大太鼓の鼓動は残す
-groove(c[3], c[4], "o.......o.......", 0.7)
+groove(c[3], c[4], "O.......o...K...", 0.7)
 sham_run(c[3] + 0.3, c[3] + 1.6, [12, 10, 8, 7, 5], 0.5)
 # 区間5 北斎→江尻:風。締太鼓の速い刻みと、三味線の速い駆け回り
-groove(c[4], c[5], "o.xxX.xxo.xxXxxx", 0.85)
+groove(c[4], c[5], "O.xxK.xxo.oxKxxx", 0.85)
 for start in (0.3, 1.6, 2.9):
     k = int(rng.integers(8, 12))
     sham_run(c[4] + start, c[4] + start + 0.95, [k, k + 2, k + 1, k + 3, k + 2, k + 4, k + 3, k + 1], 0.55)
 # 区間6 江尻→洗馬:日暮れ。ゆったりした大太鼓と、三味線の静かな節
-groove(c[5], c[6], "o...x...o...x.x.", 0.6)
+groove(c[5], c[6], "O.......K...o.K.", 0.6)
 for tm, d, sl in ((0.9, 7, 0.0), (1.8, 8, 1.0), (3.2, 10, 0.0), (3.7, 8, -1.0)):
     sham(c[5] + tm, d, 0.45, slide=sl, dur=1.6)
 # 区間7 洗馬→大波:だんだん速く強く、大波へ流れ込む
@@ -315,17 +347,17 @@ breath = 0.65 + 0.35 * np.sin(2 * np.pi * 2 * t / T - np.pi / 2)  # 1周で2回�
 buf += drone * breath
 
 # 残響:1周を「輪」とみなしてかける(終わりの響きが始まりに自然につながる)
-ir_t = np.arange(int(2.4 * SR)) / SR
-ir = rng.standard_normal(len(ir_t)) * np.exp(-ir_t / 0.55)
+ir_t = np.arange(int(3.0 * SR)) / SR
+ir = rng.standard_normal(len(ir_t)) * np.exp(-ir_t / 0.75)
 ir = np.convolve(ir, np.ones(8) / 8, mode="same")     # 響きを少し柔らかく
 ir /= np.sqrt(np.sum(ir ** 2))
 IR = np.fft.rfft(np.pad(ir, (0, L - len(ir))))
 wet = np.stack([np.fft.irfft(np.fft.rfft(ch) * IR, n=L) for ch in buf])
-mix = 0.9 * buf + 0.18 * wet
+mix = 0.9 * buf + 0.25 * wet
 
 # 音圧を上げる:いったんそろえてから、やわらかく頭を丸める(割れないように)
 mix /= np.max(np.abs(mix))
-mix = np.tanh(2.2 * mix) / np.tanh(2.2)
+mix = np.tanh(1.8 * mix) / np.tanh(1.8)
 mix *= 0.9
 pcm = (mix.T * 32767).astype(np.int16)
 OUT.parent.mkdir(parents=True, exist_ok=True)
