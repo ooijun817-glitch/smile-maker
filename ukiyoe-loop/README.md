@@ -56,6 +56,11 @@ python3 tools/join.py
 ffmpeg -i 画質を上げた動画.mp4 -vf scale=2628:1770:flags=lanczos -c:v libx265 -crf 20 \
   -tag:v hvc1 -an -movflags +faststart ios/HokusaiLoop/hokusai-loop.mp4
 ```
+Topaz は長さに関係なく1回 176 クレジットかかる。1区間だけ作り直したときは、クレジットを使わずに
+その区間だけ手元で 60コマ・2628×1770 にし(ffmpeg の minterpolate と lanczos 拡大)、画質を上げた
+動画の同じ位置(24コマの n コマ目 = 60コマの 2.5n コマ目)に差し込む。差し込みは、前の区間の
+止まった最後の絵から始めると跳びが出ない(2026-10-29 に区間3でこの方法を使った)。
+
 1秒60コマにすると長さが少し変わる(34.33秒 → 34.30秒)ので、音楽(`tools/make_music.py` の
 `FPS` と `LOOP_FRAMES`)を動画のコマ数に合わせて作り直す。
 
