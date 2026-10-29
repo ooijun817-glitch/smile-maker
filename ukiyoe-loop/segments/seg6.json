@@ -1,0 +1,18 @@
+{
+  "segment": "seg6",
+  "service": "Figma Weave",
+  "model": "Kling First & Last Frame O1 Pro",
+  "run_id": "52168ab0-6d9f-438a-bf7a-883f771ff25d",
+  "duration": "5",
+  "first": "seg5_last.png",
+  "tail": "7-seba.jpg",
+  "prompt": "The wind keeps blowing across the marsh; the bent trees sway and their leaves stream away. Dusk falls: the pale sky deepens into evening blue, and a full moon rises behind the swaying trees, which become willows. The winding road turns into a quiet river flowing through the reeds; a boatman poles a cargo boat along it and another poles a long raft. Pink and blue clouds drift slowly past the moon. The camera drifts sideways with gentle parallax between reeds, willows and sky. Calm and beautiful. Ukiyo-e landscape print style by Hiroshige. One continuous transformation, not a fade or dissolve. Motion design for a large digital signage screen in a modern train station concourse: dynamic cinematic camera moves, layered parallax depth, crisp confident timing, and a refined, elegant Japanese atmosphere. Everything moves as if truly alive. Keep the flat ukiyo-e look: crisp ink outlines, flat colors, washi paper texture, no realistic shading.",
+  "negative_prompt": "smiling, grin, laughing, cartoon, anime, photorealistic, 3D render, CGI, realistic lighting, lens flare, text, subtitles, logo, watermark, extra people, deformed face, deformed hands, extra fingers, blurry, low quality, flicker, crossfade, dissolve, double exposure, ghosting, shadow figure",
+  "video": {
+    "width": 1752,
+    "height": 1180,
+    "fps": 24.0,
+    "frames": 122
+  },
+  "made_at": "2026-10-29 03:47:54"
+}
