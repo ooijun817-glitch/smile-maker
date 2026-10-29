@@ -1,0 +1,18 @@
+{
+  "segment": "seg12",
+  "service": "Figma Weave",
+  "model": "Kling 3 3.0 Pro",
+  "run_id": "2696c8d6-dfc3-4e0e-87ea-83d5702222fd",
+  "duration": "5",
+  "first": "seg11_last.png",
+  "tail": "1-great-wave.jpg",
+  "prompt": "Lightning flickers again at the foot of Mount Fuji. The dark lower slopes ripple and turn into a dark blue churning sea; the storm stirs the water, which rises into waves with white foam. Mount Fuji shrinks into the distance and becomes the small snowy peak far away, and the sky turns pale. The swelling sea surges up into a giant wave with claw-like foam curling over long boats, becoming the woodblock print 'The Great Wave off Kanagawa'. The camera pushes forward with the rising water. One continuous transformation, not a fade or dissolve. Motion design for a large digital signage screen in a modern train station concourse: dynamic cinematic camera moves, layered parallax depth, crisp confident timing, and a refined, elegant Japanese atmosphere. Everything moves as if truly alive. Keep the flat ukiyo-e look: crisp ink outlines, flat colors, washi paper texture, no realistic shading.",
+  "negative_prompt": "smiling, grin, laughing, cartoon, anime, photorealistic, 3D render, CGI, realistic lighting, lens flare, text, subtitles, logo, watermark, extra people, deformed face, deformed hands, extra fingers, blurry, low quality, flicker, crossfade, dissolve, double exposure, ghosting, shadow figure",
+  "video": {
+    "width": 1752,
+    "height": 1180,
+    "fps": 24.0,
+    "frames": 121
+  },
+  "made_at": "2026-10-29 22:48:35"
+}
