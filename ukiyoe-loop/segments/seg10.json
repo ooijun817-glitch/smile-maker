@@ -1,0 +1,18 @@
+{
+  "segment": "seg10",
+  "service": "Figma Weave",
+  "model": "Kling 3 3.0 Pro",
+  "run_id": "8aaedc4b-4bca-4259-a667-7d594c7e47a6",
+  "duration": "5",
+  "first": "seg9_last.png",
+  "tail": "11-shono.jpg",
+  "prompt": "The tall vertical print in the center of the grey-green background widens to fill the whole screen. The downpour grows stronger, the rain lines slanting hard in the wind. The bridge tilts and rises into a steep hillside road, and the river becomes a grove of bamboo bending in the wind, drawn as layered grey silhouettes. The people hurrying on the bridge become travelers and palanquin bearers running up and down the slope in the driving rain, pressing their straw hats and umbrellas against the wind. Ukiyo-e landscape print style by Hiroshige. One continuous transformation, not a fade or dissolve. Motion design for a large digital signage screen in a modern train station concourse: dynamic cinematic camera moves, layered parallax depth, crisp confident timing, and a refined, elegant Japanese atmosphere. Everything moves as if truly alive. Keep the flat ukiyo-e look: crisp ink outlines, flat colors, washi paper texture, no realistic shading.",
+  "negative_prompt": "smiling, grin, laughing, cartoon, anime, photorealistic, 3D render, CGI, realistic lighting, lens flare, text, subtitles, logo, watermark, extra people, deformed face, deformed hands, extra fingers, blurry, low quality, flicker, crossfade, dissolve, double exposure, ghosting, shadow figure",
+  "video": {
+    "width": 1752,
+    "height": 1180,
+    "fps": 24.0,
+    "frames": 121
+  },
+  "made_at": "2026-10-29 21:06:57"
+}
