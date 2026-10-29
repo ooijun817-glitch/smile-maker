@@ -11,6 +11,8 @@
 - 太鼓は2種類:低く大きく響く大太鼓と、高く締まった音の締太鼓。場面ごとに約130拍/分で刻む。
   写楽の見得では歌舞伎の拍子木を鳴らす
 - 低い持続音を薄く敷く
+- 人の掛け声(よーっ、はっ、いやーっ、それっ、日本一)を場面の山場に入れる。
+  掛け声は Figma Weave の音声 AI(Qwen-3 TTS)で作り、sounds/ に切り分けて置いている
 - 長さは動画の1周ちょうど。終わりにはみ出した余韻は始まりへ回し込み、残響も「輪」として
   かけるので、くり返し再生しても切れ目が出ない
 - 録音や既存の曲は使っていない(すべてこのプログラムで作った音)
@@ -20,6 +22,8 @@ import wave
 from pathlib import Path
 
 import numpy as np
+
+SOUNDS = Path(__file__).resolve().parent.parent / "sounds"
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "ios" / "HokusaiLoop" / "hokusai-music.wav"
@@ -165,6 +169,16 @@ def groove(start, end, pattern, vel=1.0, beats=11):
             place(shime(0.55 * vel), tm, 0.25)
 
 
+def voice(name, time, vel=1.0, pan=0.0):
+    """sounds/kakegoe-<name>.wav の掛け声を置く。ファイルがなければ何もしない。"""
+    path = SOUNDS / f"kakegoe-{name}.wav"
+    if not path.exists():
+        return
+    with wave.open(str(path)) as w:
+        x = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(float) / 32767
+    place(0.55 * vel * x, time, pan)
+
+
 def note(time, degree, vel=0.8, bend=0.0, dur=3.2):
     jitter = rng.normal(0, 0.008)  # 人が弾いたような、わずかなゆらぎ
     pan = np.clip((degree - 7) / 10, -0.6, 0.6) - 0.2  # 箏は少し左に
@@ -282,6 +296,14 @@ for i, tm in enumerate(c[6] + 0.1 + np.cumsum(np.geomspace(0.45, 0.06, 30))):
         place(shime(0.35 + 0.02 * i), tm, 0.25)
 for tm in (c[6] + 1.0, c[6] + 2.0, c[6] + 2.6, c[6] + 3.1, c[6] + 3.5, T - 0.25):
     place(odaiko(0.8), tm)
+
+# ---- 掛け声 ----
+voice("ha1", c[0] + 1.8, 1.0, -0.1)          # 大波が砕ける
+voice("iyaa", c[1] + 2.35, 0.9, 0.1)         # 鳳凰が現れる
+voice("nipponichi", c[2] + 4.05, 0.9, 0.25)  # 写楽の見得のあとに、大向こうから「日本一!」
+voice("sore", c[4] + 0.2, 0.9, -0.1)         # 江尻の風が起こる
+voice("ha2", c[6] + 2.0, 0.9, 0.1)           # 大波へ向けて盛り上がる途中
+voice("yoo", T - 1.45, 1.0, 0.0)             # 一周の終わりに「よーっ!」、そのまま最初の大波へ
 
 # 低い持続音:レとラ。1周でちょうど整数回振動する高さにして、つなぎ目で位相がずれないようにする
 t = np.arange(L) / SR

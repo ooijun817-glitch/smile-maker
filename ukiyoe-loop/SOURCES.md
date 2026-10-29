@@ -36,4 +36,5 @@ Open Access について:https://www.metmuseum.org/policies/image-resources
 
 ## 音楽について
 `ios/HokusaiLoop/hokusai-music.wav` は、`tools/make_music.py` がその場で作った音。録音や既存の曲は
-使っていない。箏のような音は弦をはじいたときの倍音を重ねて作り、音階は都節音階(レ・ミ♭・ソ・ラ・シ♭)。
+使っていない。人の掛け声(`sounds/kakegoe-*.wav`)は、Figma Weave の音声 AI(Qwen-3 TTS)で作った声を
+切り分けたもの。箏のような音は弦をはじいたときの倍音を重ねて作り、音階は都節音階(レ・ミ♭・ソ・ラ・シ♭)。
