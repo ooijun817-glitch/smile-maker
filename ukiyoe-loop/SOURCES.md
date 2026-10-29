@@ -33,3 +33,7 @@ Open Access について:https://www.metmuseum.org/policies/image-resources
 ## AI で作った動画について
 `segments/` と `ios/HokusaiLoop/hokusai-loop.mp4` は、上の絵をもとに Kling(AI)で作った動画。
 絵の線や形は AI が描き直したもので、原画そのものではない。
+
+## 音楽について
+`ios/HokusaiLoop/hokusai-music.wav` は、`tools/make_music.py` がその場で作った音。録音や既存の曲は
+使っていない。箏のような音は弦をはじいたときの倍音を重ねて作り、音階は都節音階(レ・ミ♭・ソ・ラ・シ♭)。
